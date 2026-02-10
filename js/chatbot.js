@@ -284,19 +284,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 foundAchievement = true;
 
                 // Extract position
-                const positionMatch = block.innerText.match(/Position\s*:\s*(.+?)(?:\n|INNOVATION)/i);
+                const positionMatch = block.innerText.match(/Position\s*:\s*([^>\n]+)/i);
                 if (positionMatch) {
                     achievementHTML += `<b>Position:</b> ${positionMatch[1].trim()}<br>`;
                 }
 
-                // Extract event name
-                const eventMatch = block.innerText.match(/INNOVATION SHOWCASING\s*:\s*(.+?)(?:\n|Local)/i);
+                // Extract event name (look for INNOVATION SHOWCASING)
+                const eventMatch = block.innerText.match(/INNOVATION SHOWCASING\s*:\s*([^>\n]+)/i);
                 if (eventMatch) {
                     achievementHTML += `<b>Event:</b> ${eventMatch[1].trim()}<br>`;
                 }
 
-                // Extract project name
-                const projectMatch = block.innerText.match(/Project Name\s*:\s*(.+?)(?:\n|$)/i);
+                // Extract project name (handles the weird <title> Project Name structure)
+                const projectMatch = block.innerText.match(/Project Name\s*:\s*([^>\n]+)/i);
                 if (projectMatch) {
                     achievementHTML += `<b>Project:</b> ${projectMatch[1].trim()}<br><br>`;
                 }
@@ -789,6 +789,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            section.style.transition = 'outline 0.5s ease-in-out';
+            section.style.outline = '4px solid #b4aea2';
+            setTimeout(() => {
+                section.style.outline = 'none';
+            }, 3000);
+        }
+    }
+
 
 
     function handleInput() {
@@ -803,12 +815,54 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        // Simulation Command Handler
+        if (text.toLowerCase().startsWith('/simulate')) {
+            const simulationPrompt = text.substring(9).trim();
+            if (!simulationPrompt) {
+                addMessage("⚠️ <b>Simulation Mode:</b> Please provide questions separated by newlines or commas.<br>Example: `/simulate Who are you?, What are your skills?`", 'bot');
+            } else {
+                runSimulation(simulationPrompt);
+            }
+            elements.input.value = '';
+            return;
+        }
+
+        // Refresh Command Handler
+        if (text.toLowerCase() === '/refresh') {
+            addMessage("🔄 <b>Refreshing Knowledge Base...</b>", 'bot');
+            scrapePortfolioData();
+            elements.input.value = '';
+            return;
+        }
+
         addMessage(text, 'user');
-        convoManager.addTurn('user', text); // Log user turn
+        convoManager.addTurn('user', text);
 
         elements.input.value = '';
         setInputState(false);
         processBotResponse(text);
+    }
+
+    function runSimulation(input) {
+        addMessage("🧪 <b>Running Simulation...</b>", 'bot');
+        const questions = input.split(/[,\n]/).map(q => q.trim()).filter(q => q.length > 0);
+
+        let reportHTML = `📊 <b>Simulation Report:</b><br><br>`;
+        let successCount = 0;
+
+        questions.forEach((q, i) => {
+            const match = findBestMatch(q);
+            const status = match ? '✅' : '❌';
+            if (match) successCount++;
+            reportHTML += `${i + 1}. "${q}" -> <b>${match ? match.id : 'No Match'}</b> ${status}<br>`;
+        });
+
+        reportHTML += `<br>🎯 <b>Accuracy:</b> ${Math.round((successCount / questions.length) * 100)}% (${successCount}/${questions.length})`;
+
+        setTimeout(() => {
+            addMessage(reportHTML, 'bot');
+            renderChips(['Skills', 'Projects', 'Contact']);
+        }, 800);
     }
 
     function addDebugMessage(info) {
@@ -859,6 +913,17 @@ document.addEventListener('DOMContentLoaded', function () {
             if (match) {
                 responseText = match.response;
                 if (match.followUpChips) chips = match.followUpChips;
+
+                // Event-triggered: Scroll to relevant section
+                if (match.id === 'achievements' || match.id === 'research' || match.id === 'publications') {
+                    scrollToSection('section-counter');
+                } else if (match.id === 'projects_list' || match.id.startsWith('proj_')) {
+                    scrollToSection('project-section');
+                } else if (match.id === 'skills_core') {
+                    scrollToSection('skills-section');
+                } else if (match.id === 'domain_works_list') {
+                    scrollToSection('domain-work');
+                }
 
                 // Determine broad intent from ID for context
                 let detectedIntent = match.id.split('_')[0];
@@ -988,6 +1053,24 @@ document.addEventListener('DOMContentLoaded', function () {
     elements.send.addEventListener('click', handleInput);
     elements.input.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleInput();
+    });
+
+    // Proactive Scroll Monitor (Event-Triggered)
+    let proactiveTriggered = false;
+    window.addEventListener('scroll', () => {
+        if (proactiveTriggered) return;
+
+        const triggerSection = document.getElementById('section-counter');
+        if (triggerSection) {
+            const rect = triggerSection.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                proactiveTriggered = true;
+                if (!state.isOpen) {
+                    addMessage("👋 Checking out my <b>Achievements & Research</b>? I can give you more details or paper links!", 'bot');
+                    renderChips(['Publications', 'Achievements', 'Contact']);
+                }
+            }
+        }
     });
 
     // Run Scraper to populate KB
