@@ -115,16 +115,22 @@ class KnowledgeBase {
                 extractStrategy: 'skills'
             },
             experience: {
-                keywords: ['experience', 'work', 'job', 'career', 'employment', 'resume', 'cv', 'history', 'current work', 'workplace', 'years of experience', 'research experience'],
+                keywords: ['experience', 'work', 'job', 'career', 'employment', 'history', 'current work', 'workplace', 'years of experience'],
                 type: 'dynamic',
                 sectionId: 'resume-section',
                 extractStrategy: 'experience'
             },
             research: {
-                keywords: ['research', 'publications', 'papers', 'publication', 'paper', 'journal', 'conference', 'springer', 'published'],
+                keywords: ['research', 'publications', 'papers', 'publication', 'paper', 'journal', 'conference', 'springer', 'published', 'research experience'],
                 type: 'dynamic',
-                sectionId: 'resume-section',
+                sectionId: 'section-counter',
                 extractStrategy: 'research'
+            },
+            achievements: {
+                keywords: ['achievements', 'achievement', 'awards', 'award', 'winner', 'competition', 'innovation', 'showcase', 'recognition', 'honor', 'prize'],
+                type: 'dynamic',
+                sectionId: 'section-counter',
+                extractStrategy: 'achievements'
             },
             education: {
                 keywords: ['education', 'study', 'degree', 'university', 'college', 'school', 'academic'],
@@ -156,15 +162,22 @@ class KnowledgeBase {
                 extractStrategy: 'contact'
             },
             github: {
-                keywords: ['github', 'git', 'github link', 'repository', 'repositories', 'code repository'],
+                keywords: ['github', 'git', 'github link', 'repository', 'repositories', 'code repository', 'github profile'],
                 type: 'dynamic',
-                sectionId: 'contact-section',
+                sectionId: 'domain-work',
                 extractStrategy: 'github'
             },
             resumeDownload: {
-                keywords: ['resume download', 'cv download', 'download resume', 'download cv', 'pdf'],
-                type: 'static',
-                sectionId: null
+                keywords: ['resume download', 'cv download', 'download resume', 'download cv', 'pdf', 'resume', 'cv', 'download'],
+                type: 'dynamic',
+                sectionId: 'home-section',
+                extractStrategy: 'resumeDownload'
+            },
+            careerObjective: {
+                keywords: ['career objective', 'objective', 'career goal', 'goal', 'aspiration', 'ambition', 'mission', 'vision', 'what does she want', 'career plan'],
+                type: 'dynamic',
+                sectionId: 'career-section',
+                extractStrategy: 'careerObjective'
             },
             location: {
                 keywords: ['location', 'where', 'live', 'city', 'country', 'place', 'based'],
@@ -258,10 +271,13 @@ class KnowledgeBase {
             skills: ['Projects', 'Certifications'],
             projects: ['Skills', 'Contact'],
             experience: ['Projects', 'Education'],
-            research: ['Projects', 'Publications'],
+            research: ['Achievements', 'Projects'],
+            achievements: ['Research', 'Projects'],
             education: ['Experience', 'Skills'],
             contact: ['Projects', 'Resume'],
             github: ['Projects', 'Contact'],
+            resumeDownload: ['Experience', 'Projects'],
+            careerObjective: ['Skills', 'Projects'],
             certifications: ['Skills', 'Projects'],
             domain: ['Projects', 'Skills'],
             help: ['Skills', 'Projects', 'Contact']
@@ -479,11 +495,14 @@ class ResponseGenerator {
             'experience': () => this.extractExperience(section),
             'education': () => this.extractEducation(section),
             'research': () => this.extractResearch(section),
+            'achievements': () => this.extractAchievements(section),
             'projects': () => this.extractProjects(section),
             'certifications': () => this.extractCertifications(section),
             'github': () => this.extractGithub(section),
             'contact': () => this.extractContact(section),
-            'currentWorkplace': () => this.extractCurrentWorkplace(section)
+            'currentWorkplace': () => this.extractCurrentWorkplace(section),
+            'resumeDownload': () => this.extractResumeDownload(section),
+            'careerObjective': () => this.extractCareerObjective(section)
         };
 
         if (strategy && strategies[strategy]) {
@@ -620,57 +639,117 @@ class ResponseGenerator {
     }
 
     /**
-     * Extract research with clickable paper links
+     * Extract research from #section-counter block (Research Experience)
      */
     extractResearch(section) {
-        // Look for SafeNet AI link
-        const safenetLink = section.querySelector('a[href*="safenetai"]');
+        let researchHTML = '<strong>🔬 Research Experience:</strong><br><br>';
+        let foundContent = false;
 
-        let researchHTML = '<strong>🔬 Research & Publications:</strong><br><br>';
-
-        // Check for actual research papers/publications in the HTML
-        const allBlocks = section.querySelectorAll('.resume-wrap');
-        let foundPapers = false;
+        // Find the block-18 that contains h2 "Research Experience"
+        const allBlocks = section.querySelectorAll('.block-18');
 
         allBlocks.forEach(block => {
-            const heading = block.querySelector('h2, h3');
+            const heading = block.querySelector('h2');
+            if (heading && heading.textContent.trim().toLowerCase().includes('research experience')) {
+                foundContent = true;
 
-            // Look for research-related headings
-            if (heading && (heading.textContent.includes('Research') || heading.textContent.includes('Mentorship'))) {
-                const description = block.querySelector('p');
-                if (description) {
-                    researchHTML += description.textContent.trim() + '<br><br>';
-                }
+                // Extract paper title(s) from the ordered list
+                const paperItems = block.querySelectorAll('ol li');
+                paperItems.forEach((item, idx) => {
+                    const title = item.querySelector('h5') ? item.querySelector('h5').textContent.trim() : item.textContent.trim();
+                    researchHTML += `<strong>${idx + 1}. ${title}</strong><br><br>`;
+                });
 
-                // Look for any paper links
+                // Extract all links within the block
                 const links = block.querySelectorAll('a');
                 links.forEach(link => {
-                    if (link.href && (link.href.includes('springer') || link.href.includes('doi') || link.href.includes('arxiv') || link.href.includes('paper'))) {
-                        foundPapers = true;
-                        researchHTML += `📄 <a href="${link.href}" target="_blank" style="color:#b4aea2; text-decoration:underline; font-size:14px;">${link.textContent || 'View Paper'}</a><br><br>`;
+                    const text = link.textContent.trim();
+                    const href = link.href;
+
+                    if (href.includes('doi.org') || href.includes('springer')) {
+                        researchHTML += `📖 <a href="${href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">Springer Nature Link</a><br>`;
+                    } else if (href.includes('drive.google.com') && text.toLowerCase().includes('certificate')) {
+                        researchHTML += `🏅 <a href="${href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">Certificate of Presentation</a><br>`;
+                    } else if (href.includes('github.com')) {
+                        researchHTML += `<br>� <a href="${href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">View on GitHub</a><br>`;
                     }
                 });
             }
         });
 
-        // If SafeNet AI link exists, add it
-        if (safenetLink) {
-            researchHTML += `<strong>Research Project:</strong><br>`;
-            researchHTML += `🌐 <a href="${safenetLink.href}" target="_blank" style="color:#b4aea2; text-decoration:underline; font-size:14px;">SafeNet AI - Sentiment Analysis Research</a><br><br>`;
+        // Fallback: also surface SafeNet AI research project from resume section
+        const resumeSection = document.getElementById('resume-section');
+        if (resumeSection) {
+            const safenetLink = resumeSection.querySelector('a[href*="safenetai"]');
+            if (safenetLink) {
+                foundContent = true;
+                researchHTML += `<br><strong>Research Project:</strong><br>`;
+                researchHTML += `🌐 <a href="${safenetLink.href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">SafeNet AI – Sentiment Analysis Research</a><br>`;
+            }
         }
 
-        // Add research areas
-        researchHTML += '<strong>Research Areas:</strong><br>';
-        researchHTML += '• Comparative analysis of LLM models<br>';
-        researchHTML += '• Transformer Architecture research<br>';
-        researchHTML += '• Sentiment Analysis on Bengali Social Media<br>';
-        researchHTML += '• Applied AI and experimental model development<br><br>';
-
-        if (!foundPapers) {
-            researchHTML += '<em>Publications coming soon! Check the Resume section for research experience details.</em>';
+        if (!foundContent) {
+            researchHTML += '• Comparative analysis of LLM models<br>';
+            researchHTML += '• Transformer Architecture research<br>';
+            researchHTML += '• Sentiment Analysis on Bengali Social Media<br>';
+            researchHTML += '<br><em>Check the Resume section for full research experience details.</em>';
+        } else {
+            researchHTML += '<br><em>Ask about "achievements" to see Monisha\'s competition wins!</em>';
         }
 
         return researchHTML;
+    }
+
+    /**
+     * Extract achievements from #section-counter block
+     */
+    extractAchievements(section) {
+        let html = '<strong>🏆 Achievements:</strong><br><br>';
+        let found = false;
+
+        const allBlocks = section.querySelectorAll('.block-18');
+
+        allBlocks.forEach(block => {
+            const heading = block.querySelector('h2');
+            if (heading && heading.textContent.trim().toLowerCase().includes('achievement')) {
+                found = true;
+
+                // Extract position & event details from <p> tags
+                const paragraphs = block.querySelectorAll('p');
+                paragraphs.forEach(p => {
+                    const spans = p.querySelectorAll('span, b');
+                    if (spans.length > 0) {
+                        spans.forEach(span => {
+                            const text = span.textContent.trim();
+                            if (text) html += `${text}<br>`;
+                        });
+                    } else {
+                        const text = p.textContent.trim();
+                        if (text) html += `${text}<br>`;
+                    }
+                });
+
+                // Extract project link button
+                const links = block.querySelectorAll('a');
+                links.forEach(link => {
+                    const href = link.href;
+                    const text = link.textContent.trim();
+                    if (href && href.includes('github.com')) {
+                        html += `<br>🔗 <a href="${href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">Project Link – ${text}</a><br>`;
+                    }
+                });
+
+                html += '<br>';
+            }
+        });
+
+        if (!found) {
+            html += '🥉 <strong>2nd Runner Up</strong> – INNOVATION SHOWCASING: Smart Jahangirnagar University<br>';
+            html += 'Project: Local Chatbot and QA system using Google Gemini<br>';
+        }
+
+        html += '<em>Ask about "research" to explore Monisha\'s published work!</em>';
+        return html;
     }
 
     /**
@@ -745,21 +824,71 @@ class ResponseGenerator {
     }
 
     /**
-     * Extract GitHub link
+     * Extract GitHub link — searches domain-work section and falls back to document-wide search
      */
     extractGithub(section) {
-        const links = section.querySelectorAll('a[href*="github.com"]');
+        // First look in the passed section (domain-work)
+        let githubLink = section.querySelector('a[href*="github.com"]');
 
-        if (links.length > 0) {
-            const githubUrl = links[0].href;
-            return `<strong>💻 GitHub Profile:</strong><br><br>
-                <a href="${githubUrl}" target="_blank" style="color:#b4aea2; text-decoration:underline; font-size:16px;">
-                    ${githubUrl}
-                </a><br><br>
-                <em>Check out Monisha's repositories and code samples!</em>`;
+        // Fallback: search the whole document for a GitHub profile link
+        if (!githubLink) {
+            const allLinks = document.querySelectorAll('a[href*="github.com"]');
+            for (const link of allLinks) {
+                const href = link.href;
+                if (!githubLink || href.split('/').length <= githubLink.href.split('/').length) {
+                    githubLink = link;
+                }
+            }
         }
 
-        return '<strong>💻 GitHub:</strong><br><br>Visit Monisha\'s GitHub profile to see code samples and projects. You can find the link in the Contact section below.';
+        if (githubLink) {
+            const githubUrl = githubLink.href;
+            return `<strong>💻 GitHub Profile:</strong><br><br>
+                <a href="${githubUrl}" target="_blank" style="color:#b4aea2; text-decoration:underline; font-size:15px;">${githubUrl}</a><br><br>
+                <em>Explore Monisha's repositories and open-source code!</em>`;
+        }
+
+        return `<strong>💻 GitHub Profile:</strong><br><br>
+            <a href="https://github.com/Monisha09-ds" target="_blank" style="color:#b4aea2; text-decoration:underline; font-size:15px;">https://github.com/Monisha09-ds</a><br><br>
+            <em>Explore Monisha's repositories and open-source code!</em>`;
+    }
+
+    /**
+     * Extract resume download link from home-section
+     */
+    extractResumeDownload(section) {
+        let html = '<strong>📄 Monisha\'s Resume:</strong><br><br>';
+
+        const resumeLink = section.querySelector('a[href*="drive.google.com"]');
+        if (resumeLink) {
+            html += `📥 <a href="${resumeLink.href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">Download Updated Resume (Google Drive)</a><br><br>`;
+        } else {
+            html += `📥 <a href="https://drive.google.com/file/d/1bDMGBARC3MTMIxhA3tY18BAPL4ItNOoG/view?usp=drive_link" target="_blank" style="color:#b4aea2; text-decoration:underline;">Download Updated Resume (Google Drive)</a><br><br>`;
+        }
+
+        html += '<em>Ask about "experience" to see her full work history!</em>';
+        return html;
+    }
+
+    /**
+     * Extract Career Objective from career-section
+     */
+    extractCareerObjective(section) {
+        const objectiveEl = section.querySelector('.career-objective-text');
+        const heading = section.querySelector('h2');
+
+        let html = '<strong>🎯 Career Objective:</strong><br><br>';
+
+        if (objectiveEl) {
+            html += objectiveEl.innerText.trim() + '<br><br>';
+        } else if (heading) {
+            html += section.innerText.replace(heading.innerText, '').trim() + '<br><br>';
+        } else {
+            html += '<strong>Applied AI Engineer</strong> with strong backend and DevOps orientation, focused on designing, deploying, and scaling production-grade AI systems. Passionate about building automated, reliable, and maintainable AI-driven backend platforms that integrate <strong>Generative AI</strong> and <strong>cloud-native DevOps practices</strong>.<br><br>';
+        }
+
+        html += '<em>Ask about "skills" or "projects" to see this in action!</em>';
+        return html;
     }
 
     /**
