@@ -671,7 +671,7 @@ class ResponseGenerator {
                     } else if (href.includes('drive.google.com') && text.toLowerCase().includes('certificate')) {
                         researchHTML += `🏅 <a href="${href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">Certificate of Presentation</a><br>`;
                     } else if (href.includes('github.com')) {
-                        researchHTML += `<br>💻 <a href="${href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">View on GitHub</a><br>`;
+                        researchHTML += `<br> <a href="${href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">View on GitHub</a><br>`;
                     }
                 });
             }
@@ -717,7 +717,6 @@ class ResponseGenerator {
                 // Extract position & event details from <p> tags
                 const paragraphs = block.querySelectorAll('p');
                 paragraphs.forEach(p => {
-                    // Get all text spans
                     const spans = p.querySelectorAll('span, b');
                     if (spans.length > 0) {
                         spans.forEach(span => {
@@ -834,10 +833,8 @@ class ResponseGenerator {
         // Fallback: search the whole document for a GitHub profile link
         if (!githubLink) {
             const allLinks = document.querySelectorAll('a[href*="github.com"]');
-            // Prefer profile links (not repo links inside project list)
             for (const link of allLinks) {
                 const href = link.href;
-                // Pick the shortest github url (likely the profile, not a deep repo)
                 if (!githubLink || href.split('/').length <= githubLink.href.split('/').length) {
                     githubLink = link;
                 }
@@ -862,7 +859,6 @@ class ResponseGenerator {
     extractResumeDownload(section) {
         let html = '<strong>📄 Monisha\'s Resume:</strong><br><br>';
 
-        // Look for the resume/CV button in home-section
         const resumeLink = section.querySelector('a[href*="drive.google.com"]');
         if (resumeLink) {
             html += `📥 <a href="${resumeLink.href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">Download Updated Resume (Google Drive)</a><br><br>`;
