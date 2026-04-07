@@ -68,40 +68,7 @@
 			color: rgb(255, 255, 255);
 			overflow: hidden;
 			white-space: nowrap;
-			animation: typing 3s steps(20, end) infinite;
 		}
-
-		#typing-animation:before {
-			content: "";
-			/* position: absolute; */
-			top: 0;
-			left: 0;
-			width: 0;
-			height: 100%;
-			background-color: #ccc;
-			animation: typing-cursor 0.5s ease-in-out infinite;
-		}
-
-		@keyframes typing {
-			from {
-				width: 0;
-			}
-
-			to {
-				width: 100%;
-			}
-		}
-
-		@keyframes typing-cursor {
-			from {
-				width: 5px;
-			}
-
-			to {
-				width: 0;
-			}
-		}
-
 
 		/* project image zoom effect */
 
@@ -112,6 +79,31 @@
 
 		.zoom-effect:hover {
 			transform: scale(1.1);
+		}
+
+		/* Responsive improvements */
+		@media (max-width: 768px) {
+			#typing-animation {
+				font-size: 20px !important;
+				white-space: normal !important;
+				display: inline-block;
+				min-height: 30px;
+			}
+
+			.heading-section h1.big {
+				font-size: 60px !important;
+			}
+		}
+
+		@media (max-width: 480px) {
+			#typing-animation {
+				font-size: 16px !important;
+			}
+
+			.about-info p span:first-child {
+				width: 100% !important;
+				margin-bottom: 5px;
+			}
 		}
 	</style>
 
@@ -211,10 +203,10 @@
 								<!-- <p><a href="https://drive.google.com/file/d/1bDMGBARC3MTMIxhA3tY18BAPL4ItNOoG/view?usp=drive_link"
 										class="btn btn-primary py-4 px-5">Updated Resume</a></p> -->
 
+								<p><a href="https://drive.google.com/file/d/1dzjO26drIBAegCCcr6dclBugqtEPC2F8/view?usp=sharing"
+										class="btn btn-primary py-4 px-5">Updated Resume</a></p>
 								<!-- <p><a href="https://www.overleaf.com/read/vbycxwgtqqwt#c2521b"
 										class="btn btn-primary py-4 px-5">Updated Resume</a></p> -->
-								<p><a href="https://www.overleaf.com/read/vbycxwgtqqwt#c2521b"
-										class="btn btn-primary py-4 px-5">Updated Resume</a></p>
 
 
 
@@ -417,9 +409,9 @@
 
                                      <p>I am currently working at Mediusware Ltd. as a Software Engineer(I) in AI/ML domain. I build and improve backend-driven AI systems for real-world applications.I have hands-on experience working on both standalone AI applications and integrating AI-based features into existing software systems. My work focuses on designing RAG pipelines, multi-agent workflows, scalable APIs, and AI-powered backend services using technologies such as FastAPI, LangChain, LangGraph, vector databases, and modern LLM frameworks.
 
-I have completed my BSc in Information Technology from the Institute of Information Technology, Jahangirnagar University. Through my professional work, research involvement, and mentorship activities, I have developed practical experience in Machine Learning, Deep Learning, Natural Language Processing, and Generative AI.
-
-I am particularly interested in building maintainable and production-ready AI systems that combine back.</p>
+I have completed my BSc in ,<strong>Information Technology</strong> from Institute of Information Technology, Jahangirnagar University. Through my professional work,search involvement, and mentorship activities, I have developed practical experience in Machine Learning, Deep Learning, Natural Language Processing, and Generative AI.My
+									goal is to integrate AI with Data Science to uncover insights, enhance analytics,
+									and drive impactful business solutions.</p>
 								<ul class="about-info mt-4 px-md-0 px-2">
 									<!-- <li class="d-flex"><span>Profile:</span> <span>Data Science &amp; Analytics</span></li> -->
 									<li class="d-flex"><span>Domain:</span> <span>Information Technology </span></li>
