@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Monisha's Portfolio</title>
+	<meta charset="utf-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="css/animate.css">
+
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="css/magnific-popup.css">
+
+	<link rel="stylesheet" href="css/aos.css">
+
+	<link rel="stylesheet" href="css/ionicons.min.css">
+
+	<link rel="stylesheet" href="css/flaticon.css">
+	<link rel="stylesheet" href="css/icomoon.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/chatbot.css">
+
+
+
+	<style>
+		/*======================================
+//--//-->   ABOUT
+======================================*/
+
+		.about-mf .box-shadow-full {
+			padding-top: 4rem;
+			padding-bottom: 4rem;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+		}
+
+		.about-mf .about-img {
+			margin-bottom: 2rem;
+		}
+
+		.about-mf .about-img img {
+			margin-left: 10px;
+		}
+
+
+		.skill-mf .progress {
+			/* background-color: #cde1f8; */
+			margin: .5rem 0 1.2rem 0;
+			border-radius: 0;
+			height: .7rem;
+		}
+
+		.skill-mf .progress .progress-bar {
+			height: 1.2rem;
+			/* Increased for better visibility */
+			background-color: #b4aea2;
+		}
+
+
+		/* Animation styles */
+		#typing-animation {
+			position: relative;
+			font-size: 30px;
+			font-weight: bold;
+			color: rgb(255, 255, 255);
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
+		/* project image zoom effect */
+
+		.zoom-effect {
+			overflow: hidden;
+			transition: transform 0.3s ease-out;
+		}
+
+		.zoom-effect:hover {
+			transform: scale(1.1);
+		}
+
+		/* Responsive improvements */
+		@media (max-width: 768px) {
+			#typing-animation {
+				font-size: 20px !important;
+				white-space: normal !important;
+				display: inline-block;
+				min-height: 30px;
+			}
+
+			.heading-section h1.big {
+				font-size: 60px !important;
+			}
+		}
+
+		@media (max-width: 480px) {
+			#typing-animation {
+				font-size: 18px !important;
+			}
+
+			.hero .text h1 {
+				font-size: 35px !important;
+			}
+
+			.about-info p span:first-child {
+				width: 100% !important;
+				margin-bottom: 5px;
+			}
+		}
+
+		/* Polished Full Width Layout */
+		html,
+		body {
+			overflow-x: hidden;
+			width: 100% !important;
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+
+		/* AGGRESSIVE Polished Layout */
+		.container,
+		.container-fluid,
+		section,
+		.ftco-section {
+			max-width: 100% !important;
+			width: 100% !important;
+			padding-left: 5% !important;
+			padding-right: 5% !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+		}
+
+		/* Reset nested padding */
+		.row,
+		.col-md-12,
+		.col-lg-12,
+		.row .container {
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+		}
+
+		/* Professional Global Headings */
+		h2,
+		.heading-section h2,
+		section h2 {
+			font-size: 40px !important;
+			font-weight: 700 !important;
+			text-transform: uppercase !important;
+			letter-spacing: 2px !important;
+			color: #ffffff !important;
+			margin-bottom: 30px !important;
+			display: block !important;
+		}
+
+		/* Hero Specifics */
+		.owl-carousel.home-slider .slider-item .slider-text h1 {
+			font-weight: 700 !important;
+		}
+
+		.row {
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+		}
+
+		/* Internal section spacing */
+		.ftco-section {
+			padding: 6em 0 !important;
+			/* More spacious */
+		}
+
+		@media (max-width: 768px) {
+
+			.container,
+			.container-fluid,
+			section {
+				padding-left: 20px !important;
+				padding-right: 20px !important;
+			}
+
+			.ftco-section {
+				padding: 4em 0 !important;
+			}
+		}
+	</style>
+
+
+</head>
+
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+
+	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
+		<div class="container">
+			
+			<button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse"
+				data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="oi oi-menu"></span> Menu
+			</button>
+
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav nav ml-auto">
+					<li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
+					<li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
+					<li class="nav-item"><a href="#resume-section" class="nav-link"><span>Resume</span></a></li>
+					<li class="nav-item"><a href="#project-section" class="nav-link"><span>Current Projects</span></a>
+					</li>
+					<li class="nav-item"><a href="#domain-work" class="nav-link"><span>Domain Works</span></a></li>
+					<li class="nav-item"><a href="#Certification" class="nav-link"><span>Certification</span></a></li>
+					<li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<section id="home-section" class="hero">
+		<div class="home-slider  owl-carousel">
+			<div class="slider-item ">
+				<div class="overlay"></div>
+				<div class="container">
+					<div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end"
+						data-scrollax-parent="true">
+						<div class="one-third js-fullheight order-md-last img"
+							style="background-image:url(images/bg_1.png);">
+							<div class="overlay"></div>
+						</div>
+						<div class="one-forth d-flex  align-items-center ftco-animate"
+							data-scrollax=" properties: { translateY: '70%' }">
+							<div class="text">
+								<span class="subheading">Hello!</span>
+								<h1 class="mb-4 mt-3">I'm <span>Sabikun Naher Monisha</span></h1>
+
+								
+								<span id="typing-animation"></span>
+
+								<script>
+
+									// Initialize the typing animation
+									const typingAnimationElement = document.getElementById('typing-animation');
+
+									// Create an array of typing text
+									const typingTexts = [
+										'AI Engineer',
+										'Research Analysist',
+										'Online Mentor ',
+									];
+
+									// Create a function to display the typing animation for a given text
+									function playTypingAnimation(text) {
+										// Loop through each character and add it to the element
+										for (let i = 0; i < text.length; i++) {
+											setTimeout(() => {
+												typingAnimationElement.textContent += text[i];
+											}, i * 200); // Increase the delay to slow down the typing animation
+										}
+
+										// Once the animation is complete, reset the text and start over
+										setTimeout(() => {
+											typingAnimationElement.textContent = '';
+											playTypingAnimation(typingTexts[(typingTexts.indexOf(text) + 1) % typingTexts.length]);
+										}, text.length * 200);
+									}
+
+									// Start the typing animation loop
+									playTypingAnimation(typingTexts[0]);
+
+								</script>
+
+								<br>
+								<br>
+								
+								
+								
+								
+								
+								
+								
+
+								
+								
+
+								<p><a href="https://drive.google.com/file/d/1dzjO26drIBAegCCcr6dclBugqtEPC2F8/view?usp=sharing"
+										class="btn btn-primary py-4 px-5">Updated Resume</a></p>
+								
+
+
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+	<section class="ftco-section pt-3 pb-4" id="career-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-12 text-left">
+					<h2 class="mb-4"><b>Career Objective</b></h2>
+					<p class="career-objective-text">
+						<strong>I want to work as an Applied AI Engineer</strong> with strong backend and DevOps
+						orientation, focused on
+						designing, deploying, and scaling production-grade AI systems. Passionate about building
+						automated, reliable, and maintainable AI-driven backend platforms that integrate
+						<strong>Generative AI</strong> and <strong>cloud-native DevOps practices</strong>.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<section class="ftco-about img ftco-section ftco-no-pb" id="about-section">
+		<div class="container">
+			<div class="row">
+				<div class="row d-flex align-items-stretch">
+					
+					<div class="col-md-6 col-lg-5 d-flex">
+						<div class="img-about img d-flex align-items-stretch">
+							<div class="overlay">
+								<div class="row">
+									<div class="col-sm-6 col-md-5">
+										<div class="about-img">
+											<img src="images\Monisha'sImage -1.jpg" class="img-fluid rounded b-shadow-a"
+												alt="">
+										</div>
+									</div>
+									
+									<div class="col-sm-6 col-md-7">
+										<div class="about-info">
+											<p><span class="title-s">Name: </span> <span>Sabikun Naher Monisha</span>
+											</p>
+											<p><span class="title-s">Job Role: </span><span>AI
+													Engineer,<br><span>Research Analysist</span><br><span>Online
+														Mentor</span></p>
+											<p><span class="title-s">Experience: </span> <span>2.5+ Years</span></p>
+
+										</div>
+									</div>
+								</div>
+
+								<div class="skill-mf">
+									<p class="title-s">Skills</p>
+									<span>Python</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%"
+											aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+									<span>Generative AI</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%"
+											aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+									
+
+									<span>Statistics</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%"
+											aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+									<span>Machine Learning</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%"
+											aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<span>Deep Learning</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<span>Natural Language Processing</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<span>SQL</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<span>Power BI</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+
+									</div>
+									<span>Postgresql</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<span>MLOps</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+
+									</div>
+
+
+									<span>Docker</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+
+									</div>
+									<span>System Design (Microservice Orchestration, Data sync pipeline for structured
+										or unstructured data)</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%"
+											aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+									<span>Github Actions(CI/CD pipeline)</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+									<span>AWS(S3,EC2)</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<span>Redis(Cache Memory Management)</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<span>Celery(Task Queue)</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<span>Knowledge Graph DB(Neo4j)</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<span>ElevenLabs API(Text-to-Speech (TTS)) </span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<span>LLM-Finetuning(LoRA)</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<span>GraphQL</span> <span class="pull-right"></span>
+									<div class="progress">
+										<div class="progress-bar" role="progressbar" style="width: 100%;"
+											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-lg-7 pl-lg-5 pb-5">
+						<div class="row justify-content-start pb-3">
+							<div class="col-md-12 heading-section ftco-animate">
+
+								<h1 class="big">About</h1>
+								<h2 class="mb-4">About Me</h2>
+								
+								
+
+								<p>I am currently working at Mediusware Ltd. as a Software Engineer(I) in AI/ML domain.
+									I build and improve backend-driven AI systems for real-world applications.I have
+									hands-on experience working on both standalone AI applications and integrating
+									AI-based features into existing software systems. My work focuses on designing RAG
+									pipelines, multi-agent workflows, scalable APIs, and AI-powered backend services
+									using technologies such as FastAPI, LangChain, LangGraph, vector databases, and
+									modern LLM frameworks.
+
+									I have completed my BSc in ,<strong>Information Technology</strong> from Institute
+									of Information Technology, Jahangirnagar University. Through my professional
+									work,search involvement, and mentorship activities, I have developed practical
+									experience in Machine Learning, Deep Learning, Natural Language Processing, and
+									Generative AI.My
+									goal is to integrate AI with Data Science to uncover insights, enhance analytics,
+									and drive impactful business solutions.</p>
+								<ul class="about-info mt-4 px-md-0 px-2">
+									
+									<li class="d-flex"><span>Domain:</span> <span>Information Technology </span></li>
+									<li class="d-flex"><span>Education:</span> <span>BSc(Hons) ,IIT,Jahangirnagar
+											University</span></li>
+									<li class="d-flex"><span>Language:</span> <span>English,Bangla</span></li>
+									<li class="d-flex"><span>Programming Language:</span>
+										<span>Python,C++,Java(OOP),HTML,CSS,JS,R</span>
+									</li>
+									<li class="d-flex"><span>Competencies :</span> <span>Data Analysis and
+											Visualization, Model Building ,Deployment </span></li>
+									
+
+								</ul>
+							</div>
+						</div>
+						<div class="skill-mf">
+							<p class="title-s"><b>Frameworks -- Python and Generative AI </b></p>
+							<span>Flask,FastAPI,Django,Pydantic,Streamlit</span> <span class="pull-right"></span>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="80"
+									aria-valuemin="0" aria-valuemax="100">
+								</div>
+							</div>
+							<span>Numpy,Pandas,Matplotlib,Scipy,Seaborn,Plotly</span> <span class="pull-right"></span>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="95"
+									aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<span>Sckit-Learn,Tenssorflow,Pytorch,Keras </span> <span class="pull-right"></span>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="95"
+									aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<span>Gen AI Models - OpenAI,Llama-index,Google Gemini,Hugging Face,Stable Diffusion</span>
+							<span class="pull-right"></span>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="95"
+									aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<span>Agentic Framework - Langchain,Langraph,CrewAI, Autogen</span> <span
+								class="pull-right"></span>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="95"
+									aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<span>RAG -- (Hybrid, Multimodal, GraphRAG)</span> <span class="pull-right"></span>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="95"
+									aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+
+							
+						</div>
+						<div class="container">
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+	</section>
+
+
+
+
+	<section class="ftco-section ftco-no-pb" id="resume-section">
+		<div class="container">
+			
+		</div>
+		</div>
+
+		<div class="row">
+			<h1 class="big-4">Experience</h1>
+			<div class="underline"></div>
+		</div>
+		<br>
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="resume-wrap ftco-animate">
+					<span class="date">February 2025 - Present</span>
+					
+					<h3><b>Company Name :</b><a href="https://mediusware.com/"> Mediusware</a></h3>
+					<span class="position">Software Engineer(I) - <strong>AI Domain</strong>(Full-Time)</span>
+					<p class="mt-4">
+					<ul>
+						
+						
+						<li> Built and deployed production-grade agentic AI systems using LangGraph, automating complex
+							dealership workflows end-to-end.</li>
+						<li>Optimized RAG pipelines using LLM fine-tuning and embedding cache strategies, reducing
+							average query-response latency with lesser hallucination.</li>
+						<li>Fine-tuned LLMs and SLMs using LoRA, improving inference speed.</li>
+						<li>Developed voice-enabled AI interfaces integrating Whisper and Kokoro TTS, achieving
+							transcription accuracy.</li>
+						<li>Contributed to backend architecture design, focusing on scalable API design and code
+							reviews.</li>
+					</ul>
+					</p>
+					
+				</div>
+			</div>
+
+
+
+			<div class="col-md-6">
+				<div class="resume-wrap ftco-animate">
+					<span class="date">March 2024 - Present</span>
+					<h2>Online Mentorship & Research Work</h2>
+					
+					<p class="mt-4">Creating Documentation specializing on ML , DL and GenAI concepts and continue my
+						research work comparative analysis of LLM models</p>
+					<ul>
+						<li>Presenting Mathematical insights into algorithms, data analysis, and model development.</li>
+						<li>Mentored students in machine learning, deep learning, statistics, and applied research
+							methodolo-gies.</li>
+						<li>Guided applied AI projects and supported experimental model development.• Research work with
+							Transformer Architecture and comparative analysis of different models</li>
+						<li>Research work with Transformer Architecture and comparative analysis of different models.
+						</li>
+						
+					</ul>
+					</p>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="resume-wrap ftco-animate">
+					<span class="date">August 2024 - December 2024 </span>
+					
+					<h3><b>Company Name : </b><a href="https://www.sociofi.io/">SocioFi Technology</a></h3>
+					<span class="position">Data Engineer</span>
+					<p class="mt-4">Design, build, and maintain data pipelines for collecting, processing, and storing
+						large datasets for fine-tuning the Large Language Model.
+					<ul>
+						<li>Part Time</li>
+						<li>Remote</li>
+						
+					</ul>
+					</p>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="resume-wrap ftco-animate">
+
+					<span class="date">Oct 2023 - 2024 Feb</span>
+					<h3><b>Website Name :</b><a href="https://safenetai-research.onrender.com/"> SafeNet AI</a></h3>
+					<h2>Data Scrapping and Research Worker </h2>
+					
+					<p class="mt-4"> Collecting data for a research paper <b>"Sentiment Analysis on Bengali Social Media
+							Comments."</b>
+					<ul>
+						<li>Dynamic Youtube Data Scrapping.</li>
+						<li>Working as a co-author of the related paper.</li>
+						
+					</ul>
+					</p>
+				</div>
+			</div>
+
+			
+
+		</div>
+
+		<br>
+		<br>
+
+		<div class="row">
+			<h1 class="big-4">Education</h1>
+			<div class="underline"></div>
+		</div>
+		<br>
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="resume-wrap ftco-animate">
+					<span class="date">2019-2024</span>
+					<h3>Bachelor of Science</h3>
+					<span class="position">IIT, Jahangirnagar University</span>
+					<p class="mt-4">CGPA : 3.47.</p>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="resume-wrap ftco-animate">
+					<span class="date">2016-2018</span>
+					<h3>HSC</h3>
+					
+					<span class="position">Siddeshwari Girl's College</span>
+					<p class="mt-4">GPA : 4.50</p>
+					<p><a href="https://drive.google.com/file/d/1Fqw1prDZtQXJ9Hx3v2yyIthzlfSP2ppj/view?usp=sharing">Academic
+							Certificate</a></p>
+
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="resume-wrap ftco-animate">
+					<span class="date">2016-2018</span>
+					<h3>SSC</h3>
+					
+					<span class="position">National Ideal School</span>
+					<p class="mt-4">GPA : 5.00</p>
+					<p><a href="https://drive.google.com/file/d/1t1tSCCISzVBSzAtMbIYulHvmwZh3Bjr9/view?usp=sharing">Academic
+							Certificate</a></p>
+				</div>
+			</div>
+
+		</div>
+
+		
+
+		</div>
+	</section>
+
+	<section class="ftco-section" id="project-section">
+		<div class="container">
+			<div class="row justify-content-center mb-5 pb-5">
+				<div class="col-md-7 heading-section text-center ftco-animate">
+					<h1 class="big big-2">Latest Projects</h1>
+					<h2 class="mb-4">Projects (Completed)</h2>
+					
+
+				</div>
+			</div>
+
+			<div class="row d-flex">
+				<ul>
+					
+					
+					<li>
+						<h3><b>1.</b> AI Sales Assistant (Multi-Agent RAG System)</h3>
+						<p><i>Technologies: LangGraph, LangChain, ChromaDB, Django</i></p>
+						<ul style="list-style-type: disc; margin-left: 20px; color: rgba(255, 255, 255, 0.7);">
+							<li>Architected a <strong>multi-agent RAG system</strong> automating end-to-end dealership
+								workflows, reducing manual operations by <strong>60%</strong>.</li>
+							<li>Designed specialized agents for document parsing, pricing estimation, booking, FAQ
+								retrieval, and human escalation.</li>
+							<li>Implemented <strong>intent-based agent routing</strong> using LangGraph, improving tool
+								selection accuracy from user queries.</li>
+							<li>Built backend services integrating <strong>LLM inference, vector retrieval, and API
+									orchestration</strong>.</li>
+						</ul>
+					</li>
+
+					<li>
+						<h3><b>2.</b> Multimodal RAG System with Microservice-Oriented Architecture</h3>
+						<p><i>Technologies: LangChain, HuggingFace, Whisper, TTS, ChromaDB</i></p>
+						<ul style="list-style-type: disc; margin-left: 20px; color: rgba(255, 255, 255, 0.7);">
+							<li>Developed a <strong>modular multimodal RAG system</strong> supporting text, image, and
+								real-time TTS-based responses.</li>
+							<li>Designed and orchestrated multiple RAG pipelines (<strong>Graph RAG, Hybrid RAG, Agentic
+									RAG</strong>) as <strong>independent microservices</strong>.</li>
+							<li>Implemented <strong>session-based memory management</strong> to maintain isolated
+								conversational contexts across dynamically selected RAG systems.</li>
+							<li>Enabled flexible model integration supporting both <strong>API-based LLMs and locally
+									fine-tuned models</strong> for embedding and response generation.</li>
+							<li>Improved system extensibility and scalability through modular pipeline abstraction and
+								service-level orchestration.</li>
+						</ul>
+					</li>
+
+					<li>
+						<h3><b>3.</b> Habit Tracker AI (Standalone Agent-Based Application)</h3>
+						<p><i>Technologies: FastAPI, OpenAI API, Render</i></p>
+						<ul style="list-style-type: disc; margin-left: 20px; color: rgba(255, 255, 255, 0.7);">
+							<li>Built a <strong>standalone AI-driven habit tracking system</strong> leveraging
+								agent-based behavioral analysis.</li>
+							<li>Designed modular backend architecture using <strong>FastAPI</strong> with structured API
+								responses and validation.</li>
+							<li>Implemented LLM-based evaluation logic to generate <strong>personalized feedback and
+									progress scoring</strong>.</li>
+							<li>Deployed production-ready backend on <strong>Render</strong> ensuring accessibility and
+								scalability.</li>
+						</ul>
+					</li>
+
+					<li>
+						<h3><b>4.</b> Web Scraper Pipeline: Recursive ETL for Unstructured Data</h3>
+						<p><i>Technologies: Crawl4AI, FastAPI, Pydantic, PostgreSQL</i></p>
+						<ul style="list-style-type: disc; margin-left: 20px; color: rgba(255, 255, 255, 0.7);">
+							<li>Built a <strong>recursive web scraping and ETL pipeline</strong> designed for
+								large-scale data extraction from unstructured sources.</li>
+							<li>Integrated <strong>Crawl4AI</strong> to convert raw HTML into knowledge-ready formats
+								(JSON/Markdown) asynchronously, improving extraction speed by <strong>4x</strong>.</li>
+							<li>Developed a <strong>FastAPI backend</strong> with multi-tenant support for managing
+								complex scraping tasks and real-time monitoring.</li>
+							<li>Automated <strong>data cleaning and transformation</strong> workflows, ensuring
+								high-quality ingestion for vector databases and LLM applications.</li>
+							<li>Implemented <strong>robust error handling and retry mechanisms</strong> to handle
+								dynamic content and site-specific anti-scraping measures.</li>
+						</ul>
+						<p><a href="https://github.com/Monisha09-ds/Webscraping_Pipeline.git"
+								style="color: #b4aea2; text-decoration: underline;">GitHub Link</a></p>
+					</li>
+
+					
+					
+					
+
+				</ul>
+			</div>
+		</div>
+	</section>
+
+
+
+
+
+	
+
+	
+	<div class="ftco-section ftco-hireme img margin-top" style="background-color: #000000;">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-7 ftco-animate text-center">
+					<h2>Domain Wise Project Work</h2>
+					<div class="heading">
+						<p>I like to experience updated frameworks and libraries &amp; uncover hidden data insights also
+							explore how can I implement them in existing projects for better performance</p>
+						<br>
+						<p><a href="https://github.com/Monisha09-ds" class="btn btn-primary py-3 px-5">GitHub</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="domain-work">
+		<div class="container">
+			<div class="row d-md-flex align-items-center">
+
+				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+					<div class="block-18">
+						<div class="text">
+							<span>
+								<h5>Building RAG Pipeline</h5>
+							</span>
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+					<div class="block-18">
+						<div class="text">
+							<span>
+								<h5> Agentic AI(Multiple Tools and Agents Orchestration) </h5>
+							</span>
+							
+						</div>
+					</div>
+				</div>
+				
+				
+
+				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+					<div class="block-18">
+						<div class="text">
+							<span>
+								<h5>MCP</h5>
+							</span>
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+					<div class="block-18">
+						<div class="text">
+							<span>
+								<h5>Fine-Tuning(LoRA)</h5>
+							</span>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+					<div class="block-18">
+						<div class="text">
+							<span>
+								<h5>Prompt Engineering</h5>
+							</span>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+					<div class="block-18">
+						<div class="text">
+							<span>
+								<h5>Natural Language Processing</h5>
+							</span>
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+					<div class="block-18">
+						<div class="text">
+
+							<span>
+								<h3>Predictive Analysis </h3>
+							</span>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+					<div class="block-18">
+						<div class="text">
+
+							<span>
+								<h3>Time Series Forecasting </h3>
+							</span>
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+					<div class="block-18">
+						<div class="text">
+							<span>
+								<h3>Recommendation Systems</h3>
+							</span>
+							
+						</div>
+					</div>
+				</div>
+				<br>
+				
+				
+
+				
+			</div>
+		</div>
+	</section>
+
+	
+
+
+	<section class="ftco-section" id="Certification">
+		<div class="container">
+			<div class="row justify-content-center mb-5 pb-5">
+				<div class="col-md-7 heading-section text-center ftco-animate">
+					<h1 class="big big-2">Online-Course-Certifications</h1>
+					<h3 class="mb-4"><b>Online-Course-Certifications</b></h3>
+					<p>Below are the online courses I have completed.</p>
+				</div>
+			</div>
+			<div class="row d-flex">
+				<table border="2" cellpadding="10" cellspacing="0" style="width: 100%; text-align: left;">
+					<thead>
+						<tr>
+							<th>Course Name</th>
+							<th>Platform/Provider</th>
+							<th>Certificate Link</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Generative AI Mastery</td>
+							<td>Udemy</td>
+							<td><a href="https://drive.google.com/file/d/1b2mHhNJQRHVACl8HXrWDoVU3na2cpZeB/view?usp=sharing"
+									target="_blank">View Certificate</a></td>
+						</tr>
+						<tr>
+							<td>Microsoft Excel</td>
+							<td>10 Minute School</td>
+							<td><a href="https://drive.google.com/file/d/1A-m1tQT4Fy_eQv_qCL42MNnsB4m1XyDf/view?usp=sharing"
+									target="_blank">View Certificate</a></td>
+						</tr>
+						<tr>
+							<td>Python Beginners to Advanced Bootcamp</td>
+							<td>Udemy</td>
+							<td><a href="https://drive.google.com/file/d/1IN9An2_n7m8D8EEXUhVjmyP-_YaTt-nM/view?usp=sharing"
+									target="_blank">View Certificate</a></td>
+						</tr>
+						<tr>
+							<td>Prompt Compression and Query Optimization</td>
+							<td>DeepLearning.AI </td>
+							<td><a href="https://learn.deeplearning.ai/accomplishments/f0abec58-e3d6-4222-9bbe-6d2229bea74a?usp=sharing"
+									target="_blank">View Completion</a></td>
+						</tr>
+						<tr>
+							<td>Orchestrating Workflows for GenAI Applications</td>
+							<td>DeepLearning.AI </td>
+							<td><a href="https://learn.deeplearning.ai/accomplishments/bb7a1067-8095-44bd-b6f5-439fe61d3311?usp=sharing"
+									target="_blank">View Completion</a></td>
+						</tr>
+						<tr>
+							<td>ChatGPT Prompt Engineering for Developers </td>
+							<td>DeepLearning.AI </td>
+							<td><a href="https://learn.deeplearning.ai/accomplishments/7db2f01c-f259-4d9d-9e92-306ce567450b?usp=sharing"
+									target="_blank">View Completion</a></td>
+						</tr>
+						<tr>
+							<td>Knowledge Graphs for RAG </td>
+							<td>DeepLearning.AI </td>
+							<td><a href="https://learn.deeplearning.ai/accomplishments/c6f200ad-6823-4f48-86ed-d2f1147a958f"
+									target="_blank">View Completion</a></td>
+						</tr>
+						
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+
+
+	<section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="section-counter">
+		<div class="container">
+			<div class="row d-md-flex align-items-center">
+				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+					<div class="block-18">
+						<div class="text">
+							<strong class="number">1</strong>
+							<span>
+								<h2>Achievements</h2>
+							</span>
+							<p><span>Position : </span><b>2nd Runner Up</b>
+								<span>INNOVATION SHOWCASING : Smart Jahangirnagar University</span><br>
+								<span>Project Name :</span><b>Local Chatbot and QA system using Google Gemini</b>
+							</p>
+							<p><a href="https://github.com/Monisha09-ds/-Local-Chatbot-and-QA-system-webapp-using-Google-Gemini.git"
+									class="btn btn-primary py-3 px-5">Project Link</a></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+					<div class="block-18">
+						<div class="text">
+							<strong class="number">1</strong>
+							<span>
+								<h2>Research Experience</h2>
+							</span>
+							<ol>
+								<li>
+									<h5>Alzheimer's Detection using XAI in Capsule Network
+										& Post Detection Management with Portable Solution</h5>
+								</li>
+								<a
+									href="https://drive.google.com/file/d/1tQAM-V4li8Lv-BCNA3P8DtNozNWPgo7F/view?usp=drive_link">(Certificate
+									of Presentation)</a><br>
+								<a href="https://doi.org/10.1007/978-3-032-04657-4_2">(Springer Nature Link )</a>
+								
+								
+							</ol>
+							<p><a href="https://github.com/Monisha09-ds/Early-_AD_Detection.git"
+									class="btn btn-primary py-3 px-5">GitHub</a></p>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+
+
+
+	<section class="ftco-section contact-section ftco-no-pb" id="contact-section">
+		<div class="container">
+			<div class="row justify-content-center mb-5 pb-3">
+				<div class="col-md-7 heading-section text-center ftco-animate">
+					<h1 class="big big-2">Contact</h1>
+					<h2 class="mb-4">Contact Me</h2>
+					<p>Below are the details to reach out to me!</p>
+				</div>
+			</div>
+
+			<div class="row d-flex contact-info mb-5">
+				<div class="col-md-6 col-lg-3 d-flex ftco-animate">
+					<div class="align-self-stretch box p-4 text-center">
+						<div class="icon d-flex align-items-center justify-content-center">
+							<span class="icon-map-signs"></span>
+						</div>
+						<h3 class="mb-4">Address</h3>
+						<p>Khilgaon Dhaka, Bangladesh</p>
+					</div>
+				</div>
+				
+				<div class="col-md-6 col-lg-3 d-flex ftco-animate">
+					<div class="align-self-stretch box p-4 text-center">
+						<div class="icon d-flex align-items-center justify-content-center">
+							<span class="icon-paper-plane"></span>
+						</div>
+						<h3 class="mb-4">Email Address</h3>
+						
+						<p><a href="itmonisha95@gmail.com">itmonisha95@gmail.com</a></p>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-lg-3 d-flex ftco-animate">
+					<div class="align-self-stretch box p-4 text-center">
+						<div class="icon d-flex align-items-center justify-content-center">
+							<span class="icon-linkedin"></span>
+						</div>
+						<h3 class="mb-4">linkedin</h3>
+						<p><a href="https://www.linkedin.com/in/sabikunmonisha/">Sabikun Monisha
+							</a></p>
+					</div>
+				</div>
+
+
+
+
+				
+			</div>
+	</section>
+
+
+
+
+
+
+
+	
+	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+				stroke="#F96D00" />
+		</svg></div>
+
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.easing.1.3.js"></script>
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/jquery.stellar.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/aos.js"></script>
+	<script src="js/jquery.animateNumber.min.js"></script>
+	<script src="js/scrollax.min.js"></script>
+
+	<script src="js/main.js"></script>
+
+	
+	<button class="chat-fab" id="chat-fab">
+		<span class="chat-fab-icon">💬</span>
+	</button>
+
+	<div class="chat-container" id="chat-container">
+		<div class="chat-header">
+			<div class="chat-header-info">
+				<img src="images/Monisha's.jpg" alt="Monisha" class="chat-avatar">
+				<div class="chat-title">
+					<h4>Monisha AI</h4>
+					<p>Virtual Assistant</p>
+				</div>
+			</div>
+			<button class="chat-close" id="chat-close">✕</button>
+		</div>
+
+		<div class="chat-messages" id="chat-messages">
+			
+		</div>
+
+		<div class="chat-suggestions" id="suggestion-chips-container">
+			<button class="suggestion-chip" data-query="skills">💡 Skills</button>
+			<button class="suggestion-chip" data-query="projects">🚀 Projects</button>
+			<button class="suggestion-chip" data-query="publications">🔬 Publications</button>
+			<button class="suggestion-chip" data-query="resume">📄 Resume</button>
+			<button class="suggestion-chip" data-query="contact">📧 Contact</button>
+		</div>
+
+		<div class="chat-input-area">
+			<input type="text" class="chat-input" id="chat-input" placeholder="Ask me anything...">
+			<button class="chat-send" id="chat-send">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+					<path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<script src="js/chatbot.js"></script>
+
+</body>
+
+</html>
