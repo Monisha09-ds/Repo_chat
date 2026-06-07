@@ -25,132 +25,46 @@
 	<link rel="stylesheet" href="css/icomoon.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/chatbot.css">
+	<link rel="stylesheet" href="css/responsive.css">
 
 
 
 	<style>
-		/*======================================
-//--//-->   ABOUT
-======================================*/
-
+		/* ── About section ── */
 		.about-mf .box-shadow-full {
 			padding-top: 4rem;
 			padding-bottom: 4rem;
-			padding-left: 0 !important;
-			padding-right: 0 !important;
 		}
+		.about-mf .about-img { margin-bottom: 2rem; }
+		.about-mf .about-img img { margin-left: 10px; }
 
-		.about-mf .about-img {
-			margin-bottom: 2rem;
-		}
-
-		.about-mf .about-img img {
-			margin-left: 10px;
-		}
-
-
+		/* ── Skill progress bars ── */
 		.skill-mf .progress {
-			/* background-color: #cde1f8; */
 			margin: .5rem 0 1.2rem 0;
 			border-radius: 0;
 			height: .7rem;
 		}
-
 		.skill-mf .progress .progress-bar {
-			height: 1.2rem;
-			/* Increased for better visibility */
+			height: .7rem;
 			background-color: #b4aea2;
 		}
 
-
-		/* Animation styles */
+		/* ── Typing animation ── */
 		#typing-animation {
-			position: relative;
 			font-size: 30px;
 			font-weight: bold;
-			color: rgb(255, 255, 255);
-			overflow: hidden;
-			white-space: nowrap;
+			color: #ffffff;
+			word-break: break-word;
+			display: inline-block;
+			min-height: 1.4em;
 		}
 
-		/* project image zoom effect */
+		/* ── Project card zoom ── */
+		.zoom-effect { overflow: hidden; transition: transform 0.3s ease-out; }
+		.zoom-effect:hover { transform: scale(1.1); }
 
-		.zoom-effect {
-			overflow: hidden;
-			transition: transform 0.3s ease-out;
-		}
-
-		.zoom-effect:hover {
-			transform: scale(1.1);
-		}
-
-		/* Responsive improvements */
-		@media (max-width: 768px) {
-			#typing-animation {
-				font-size: 20px !important;
-				white-space: normal !important;
-				display: inline-block;
-				min-height: 30px;
-			}
-
-			.heading-section h1.big {
-				font-size: 60px !important;
-			}
-		}
-
-		@media (max-width: 480px) {
-			#typing-animation {
-				font-size: 18px !important;
-			}
-
-			.hero .text h1 {
-				font-size: 35px !important;
-			}
-
-			.about-info p span:first-child {
-				width: 100% !important;
-				margin-bottom: 5px;
-			}
-		}
-
-		/* Polished Full Width Layout */
-		html,
-		body {
-			overflow-x: hidden;
-			width: 100% !important;
-			margin: 0 !important;
-			padding: 0 !important;
-		}
-
-		/* AGGRESSIVE Polished Layout */
-		.container,
-		.container-fluid,
-		section,
-		.ftco-section {
-			max-width: 100% !important;
-			width: 100% !important;
-			padding-left: 5% !important;
-			padding-right: 5% !important;
-			margin-left: 0 !important;
-			margin-right: 0 !important;
-		}
-
-		/* Reset nested padding */
-		.row,
-		.col-md-12,
-		.col-lg-12,
-		.row .container {
-			padding-left: 0 !important;
-			padding-right: 0 !important;
-			margin-left: 0 !important;
-			margin-right: 0 !important;
-		}
-
-		/* Professional Global Headings */
-		h2,
-		.heading-section h2,
-		section h2 {
-			font-size: 40px !important;
+		/* ── Global heading style ── */
+		h2, .heading-section h2, section h2 {
 			font-weight: 700 !important;
 			text-transform: uppercase !important;
 			letter-spacing: 2px !important;
@@ -159,36 +73,17 @@
 			display: block !important;
 		}
 
-		/* Hero Specifics */
+		/* ── Hero h1 ── */
 		.owl-carousel.home-slider .slider-item .slider-text h1 {
 			font-weight: 700 !important;
 		}
 
-		.row {
-			margin-left: 0 !important;
-			margin-right: 0 !important;
-		}
-
-		/* Internal section spacing */
-		.ftco-section {
-			padding: 6em 0 !important;
-			/* More spacious */
-		}
-
-		@media (max-width: 768px) {
-
-			.container,
-			.container-fluid,
-			section {
-				padding-left: 20px !important;
-				padding-right: 20px !important;
-			}
-
-			.ftco-section {
-				padding: 4em 0 !important;
-			}
-		}
+		/* ── Section spacing ── */
+		.ftco-section { padding: 6em 0; }
 	</style>
+
+
+
 
 
 </head>
@@ -1119,6 +1014,7 @@
 				</div>
 			</div>
 			<div class="row d-flex">
+				<div class="cert-table-wrapper">
 				<table border="2" cellpadding="10" cellspacing="0" style="width: 100%; text-align: left;">
 					<thead>
 						<tr>
@@ -1187,6 +1083,7 @@
 						</tr> -->
 					</tbody>
 				</table>
+				</div>
 			</div>
 		</div>
 	</section>
