@@ -1,0 +1,321 @@
+/* =============================================================
+   RESPONSIVE FIXES — Monisha's Portfolio
+   Covers: mobile (≤480px), tablet (≤768px), small-desktop (≤992px)
+   ============================================================= */
+
+/* ── 1. BASE RESET ────────────────────────────────────────── */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure images never bust their containers */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── 2. NAVBAR ────────────────────────────────────────────── */
+@media (max-width: 991.98px) {
+  .ftco-navbar-light {
+    padding: 10px 15px;
+  }
+
+  .ftco-navbar-light .collapse.navbar-collapse {
+    background: rgba(0, 0, 0, 0.95);
+    padding: 10px 15px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .navbar-nav .nav-item {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .navbar-nav .nav-item:last-child {
+    border-bottom: none;
+  }
+
+  /* Keep nav links readable */
+  .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
+    padding: 10px 0;
+    font-size: 14px;
+  }
+}
+
+/* ── 3. HERO / SLIDER ─────────────────────────────────────── */
+
+/* Fix typing animation overflow on mobile */
+#typing-animation {
+  white-space: normal !important;
+  word-break: break-word;
+  display: inline-block;
+  min-height: 1.4em;
+}
+
+@media (max-width: 991.98px) {
+  .owl-carousel.home-slider,
+  .owl-carousel.home-slider .slider-item,
+  .owl-carousel.home-slider .slider-item .slider-text {
+    height: auto !important;
+    min-height: 500px;
+  }
+
+  /* Make the image overlay not hide the text */
+  .owl-carousel.home-slider .slider-item .slider-text .one-third .overlay {
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .owl-carousel.home-slider,
+  .owl-carousel.home-slider .slider-item,
+  .owl-carousel.home-slider .slider-item .slider-text {
+    min-height: 420px;
+  }
+
+  .owl-carousel.home-slider .slider-item .slider-text h1 {
+    font-size: 30px !important;
+  }
+
+  #typing-animation {
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .owl-carousel.home-slider .slider-item .slider-text h1 {
+    font-size: 24px !important;
+    line-height: 1.3 !important;
+  }
+
+  #typing-animation {
+    font-size: 16px !important;
+  }
+
+  /* Resume button full-width on very small screens */
+  .hero .btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 14px 10px !important;
+    margin-bottom: 10px;
+  }
+}
+
+/* ── 4. CAREER OBJECTIVE ──────────────────────────────────── */
+.career-objective-text {
+  font-size: clamp(15px, 2.5vw, 24px);
+  line-height: 1.7;
+}
+
+/* ── 5. ABOUT SECTION ─────────────────────────────────────── */
+
+/* Fix nested rows breaking on mobile */
+@media (max-width: 767.98px) {
+  .ftco-about .row.d-flex.align-items-stretch {
+    flex-direction: column;
+  }
+
+  .ftco-about .col-md-6.col-lg-5,
+  .ftco-about .col-md-6.col-lg-7 {
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  /* Remove left padding that Bootstrap adds on lg screens */
+  .ftco-about .col-md-6.col-lg-7.pl-lg-5 {
+    padding-left: 15px !important;
+  }
+
+  /* About info list items – make labels stack on very small */
+  .ftco-about ul.about-info li {
+    flex-direction: column;
+  }
+
+  .ftco-about ul.about-info li span:first-child {
+    width: 100% !important;
+    margin-bottom: 2px;
+  }
+
+  .ftco-about ul.about-info li span {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-info p span:first-child {
+    width: 100% !important;
+    display: block;
+    margin-bottom: 3px;
+  }
+}
+
+/* ── 6. SKILL SECTION ─────────────────────────────────────── */
+.skill-mf span {
+  word-break: break-word;
+}
+
+/* ── 7. RESUME SECTION ────────────────────────────────────── */
+
+/* Big section headings */
+.big-4 {
+  font-size: clamp(24px, 5vw, 42px);
+  margin: 0 auto;
+  transform: scaleX(1.1);
+}
+
+@media (max-width: 767.98px) {
+  .big-4 {
+    transform: none;
+    font-size: 28px;
+  }
+
+  /* Stack resume cards */
+  #resume-section .row .col-md-6 {
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  #resume-section .row .col-md-4 {
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .resume-wrap {
+    margin-bottom: 20px;
+  }
+}
+
+/* ── 8. PROJECTS SECTION ──────────────────────────────────── */
+@media (max-width: 767.98px) {
+  #project-section .row.d-flex > ul {
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 100%;
+  }
+
+  #project-section ul li h3 {
+    font-size: 17px;
+  }
+}
+
+/* ── 9. CERTIFICATION TABLE ───────────────────────────────── */
+.cert-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cert-table-wrapper table {
+  min-width: 480px; /* keeps columns readable while allowing scroll */
+}
+
+@media (max-width: 600px) {
+  .cert-table-wrapper table {
+    font-size: 13px;
+  }
+
+  .cert-table-wrapper table th,
+  .cert-table-wrapper table td {
+    padding: 6px 8px;
+  }
+}
+
+/* ── 10. DOMAIN WORKS SECTION ─────────────────────────────── */
+@media (max-width: 575.98px) {
+  #domain-work .col-md-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  #domain-work .col-md-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+/* ── 11. ACHIEVEMENTS / SECTION-COUNTER ───────────────────── */
+@media (max-width: 767.98px) {
+  #section-counter .col-md {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  #section-counter .block-18 {
+    padding: 20px 15px;
+  }
+
+  #section-counter h5 {
+    font-size: 15px;
+  }
+}
+
+/* ── 12. CONTACT SECTION ──────────────────────────────────── */
+@media (max-width: 767.98px) {
+  .contact-section .row.d-flex.contact-info .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .contact-section .box {
+    padding: 20px 10px;
+  }
+}
+
+/* ── 13. GLOBAL HEADING SIZES ─────────────────────────────── */
+@media (max-width: 767.98px) {
+  .heading-section h2 {
+    font-size: 26px !important;
+    letter-spacing: 1px !important;
+  }
+
+  h2, section h2 {
+    font-size: 22px !important;
+  }
+}
+
+/* ── 14. FTCO-HIREME BANNER ───────────────────────────────── */
+@media (max-width: 767.98px) {
+  .ftco-hireme h2 {
+    font-size: 24px;
+  }
+
+  .ftco-hireme .btn {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    text-align: center;
+  }
+}
+
+/* ── 15. UTILITY ──────────────────────────────────────────── */
+/* Prevent table from breaking page layout */
+table {
+  word-break: break-word;
+}
+
+/* Smooth scroll for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section vertical padding responsive override */
+@media (max-width: 767.98px) {
+  .ftco-section {
+    padding: 3.5em 0;
+  }
+}
+@media (max-width: 480px) {
+  .ftco-section {
+    padding: 2.5em 0;
+  }
+}
