@@ -22,7 +22,8 @@ class ConversationManager {
         this.context = {
             currentTopic: null,
             lastEntity: null,
-            awaitingFollowUp: false
+            awaitingFollowUp: false,
+            lastResponse: null
         };
     }
 
@@ -109,9 +110,9 @@ class KnowledgeBase {
                 sectionId: 'about-section'
             },
             skills: {
-                keywords: ['skills', 'technologies', 'tech stack', 'what can you do', 'expertise', 'competencies', 'frameworks', 'tools', 'programming'],
+                keywords: ['skills', 'technologies', 'tech stack', 'what can you do', 'expertise', 'competencies', 'frameworks', 'tools', 'programming', 'go', 'golang', 'n8n', 'mcp', 'redis', 'celery', 'litellm', 'crewai'],
                 type: 'dynamic',
-                sectionId: 'about-section',
+                sectionId: 'technical-section',
                 extractStrategy: 'skills'
             },
             experience: {
@@ -138,8 +139,13 @@ class KnowledgeBase {
                 sectionId: 'resume-section',
                 extractStrategy: 'education'
             },
+            currentProject: {
+                keywords: ['current project', 'current projects', 'what are you working on', 'recent work', 'recent project', 'latest work', 'active work', 'golang', 'n8n', 'mcp', 'deep agents', 'litellm', 'claude code'],
+                type: 'static',
+                sectionId: null
+            },
             projects: {
-                keywords: ['projects', 'portfolio', 'work samples', 'what have you built', 'showcase', 'demos', 'apps'],
+                keywords: ['projects', 'portfolio', 'work samples', 'what have you built', 'showcase', 'demos', 'apps', 'completed projects'],
                 type: 'dynamic',
                 sectionId: 'project-section',
                 extractStrategy: 'projects'
@@ -204,6 +210,14 @@ class KnowledgeBase {
                 "See you later! Don't hesitate to reach out if you need anything else.",
                 "Take care! Come back soon if you want to learn more about Monisha! 😊"
             ],
+            currentProject: `⚡ <b>Monisha's Active Focus Areas:</b><br><br>
+                1. <b>Scalable System Architecture & Backend Optimization</b><br>
+                Refactoring monolith systems to microservices with <i>Go (Golang)</i>, Redis caching, and Celery task queues.<br><br>
+                2. <b>Autonomous Multi-Agent Systems & Production RAG</b><br>
+                Building multi-agent networks with <i>CrewAI / Deep Agents</i>, LiteLLM Gateway for token management, and LLM evaluation pipelines.<br><br>
+                3. <b>Workflow Automation & Tool Interoperability</b><br>
+                Engineering <i>n8n</i> ETL pipelines and custom <i>MCP servers</i> using Claude Code for LLM-environment integration.<br><br>
+                <i>Ask about "completed projects" to see her finished work!</i>`,
             resumeDownload: `📄 <b>Download Monisha's Resume:</b><br><br>
                 <a href="https://drive.google.com/file/d/1bDMGBARC3MTMIxhA3tY18BAPL4ItNOoG/view?usp=drive_link" target="_blank" style="color:#b4aea2; text-decoration:underline;">📥 Updated Resume (Google Drive)</a><br><br>
                 <a href="https://drive.google.com/drive/folders/17nutttyZG71Ah-8JYREmNeAULDtokPdK?usp=drive_link" target="_blank" style="color:#b4aea2; text-decoration:underline;">📁 Full CV Folder</a>`,
@@ -268,7 +282,8 @@ class KnowledgeBase {
             creator: ['About Monisha', 'Skills'],
             capabilities: ['Skills', 'Projects', 'Experience'],
             currentWorkplace: ['Experience', 'Projects', 'Skills'],
-            skills: ['Projects', 'Certifications'],
+            skills: ['Projects', 'Certifications', 'Experience'],
+            currentProject: ['Skills', 'Projects', 'Contact'],
             projects: ['Skills', 'Contact'],
             experience: ['Projects', 'Education'],
             research: ['Achievements', 'Projects'],
@@ -328,6 +343,16 @@ class KnowledgeBase {
 class IntentDetector {
     constructor(knowledgeBase) {
         this.kb = knowledgeBase;
+        // Synonyms mapping for robust parsing
+        this.synonyms = {
+            'cv': ['resume', 'cv', 'biodata', 'profile', 'history'],
+            'resume': ['resume', 'cv', 'biodata', 'profile', 'history'],
+            'experience': ['experience', 'work', 'job', 'career', 'employment', 'history', 'role', 'roles', 'workplace'],
+            'work': ['experience', 'work', 'job', 'career', 'employment', 'history', 'role', 'roles', 'workplace'],
+            'skills': ['skills', 'technologies', 'tech stack', 'expertise', 'competencies', 'frameworks', 'tools', 'programming'],
+            'projects': ['projects', 'portfolio', 'work samples', 'built', 'demos', 'apps', 'system', 'systems'],
+            'contact': ['contact', 'email', 'reach', 'connect', 'linkedin', 'social', 'address', 'mail', 'phone', 'number']
+        };
     }
 
     normalizeInput(text) {
@@ -384,29 +409,42 @@ class IntentDetector {
             for (const keyword of intentData.keywords) {
                 const normalizedKeyword = keyword.toLowerCase();
 
-                // Exact phrase match (highest priority)
+                // 1. Exact phrase match (highest priority)
                 if (normalized.includes(normalizedKeyword)) {
-                    score += normalizedKeyword.split(' ').length * 10;
+                    score += normalizedKeyword.split(' ').length * 15;
                 }
 
-                // Individual word matches
+                // 2. Token overlap and synonym matching
                 const keywordWords = normalizedKeyword.split(' ');
-
                 for (const kw of keywordWords) {
                     if (kw.length <= 2) continue;
 
+                    // Fetch synonyms if any
+                    const kwSyns = this.synonyms[kw] || [kw];
+
                     for (const inputWord of inputWords) {
-                        if (inputWord === kw) {
-                            score += 5;
+                        if (inputWord.length <= 2) continue;
+
+                        if (inputWord === kw || kwSyns.includes(inputWord)) {
+                            score += 8;
                         } else {
                             // Fuzzy matching for typos
                             const distance = this.getLevenshteinDistance(inputWord, kw);
                             if (distance <= 1 && kw.length > 3) {
-                                score += 3; // Partial credit for close matches
+                                score += 4; // Partial credit for close matches
                             }
                         }
                     }
                 }
+            }
+
+            // Jaccard similarity-like overlap boost
+            const kwSet = new Set(intentData.keywords.flatMap(k => k.toLowerCase().split(' ')));
+            const inputSet = new Set(inputWords);
+            const intersection = new Set([...kwSet].filter(x => inputSet.has(x)));
+            if (intersection.size > 0) {
+                const jaccard = intersection.size / (kwSet.size + inputSet.size - intersection.size);
+                score += jaccard * 10;
             }
 
             if (score > highestScore) {
@@ -419,7 +457,7 @@ class IntentDetector {
             }
         }
 
-        if (highestScore > 0) {
+        if (highestScore > 5) { // Minimum confidence threshold to filter noise
             return bestMatch;
         }
 
@@ -440,8 +478,24 @@ class ResponseGenerator {
         this.kb = knowledgeBase;
     }
 
-    generateResponse(intentResult) {
+    generateResponse(intentResult, message = '') {
         const { intent, data } = intentResult;
+
+        // If intent is projects or unknown, scan for specific project keywords in user message
+        if ((intent === 'projects' || intent === 'unknown') && message) {
+            const matchingCard = this.findMatchingProjectCard(message);
+            if (matchingCard) {
+                const details = this.extractProjectDetails(matchingCard);
+                if (details) {
+                    return {
+                        text: details,
+                        sectionId: 'project-section',
+                        shouldScroll: true,
+                        followUpChips: ['Skills', 'Contact', 'Projects']
+                    };
+                }
+            }
+        }
 
         // Handle static responses
         if (data && data.type === 'static') {
@@ -497,6 +551,7 @@ class ResponseGenerator {
             'research': () => this.extractResearch(section),
             'achievements': () => this.extractAchievements(section),
             'projects': () => this.extractProjects(section),
+            'currentProject': () => this.extractCurrentProject(section),
             'certifications': () => this.extractCertifications(section),
             'github': () => this.extractGithub(section),
             'contact': () => this.extractContact(section),
@@ -512,45 +567,294 @@ class ResponseGenerator {
         return this.extractDefault(section, sectionId);
     }
 
+    /* Date Parsing Utilities for Dynamic Experience Calculator */
+    parseSingleDate(dateStr) {
+        dateStr = dateStr.trim().toLowerCase();
+        if (dateStr === 'present' || dateStr.includes('present')) {
+            return new Date();
+        }
+        
+        const months = {
+            jan: 0, january: 0,
+            feb: 1, february: 1,
+            mar: 2, march: 2,
+            apr: 3, april: 3,
+            may: 4,
+            jun: 5, june: 5,
+            jul: 6, july: 6,
+            aug: 7, august: 7,
+            sep: 8, september: 8, sept: 8,
+            oct: 9, october: 9,
+            nov: 10, november: 10,
+            dec: 11, december: 11
+        };
+
+        const yearMatch = dateStr.match(/\b(20\d{2}|19\d{2})\b/);
+        const year = yearMatch ? parseInt(yearMatch[0], 10) : new Date().getFullYear();
+
+        let month = 0;
+        for (const [mName, mVal] of Object.entries(months)) {
+            if (dateStr.includes(mName)) {
+                month = mVal;
+                break;
+            }
+        }
+
+        return new Date(year, month, 1);
+    }
+
+    calculateTotalExperience(section) {
+        const wraps = section.querySelectorAll('.resume-wrap');
+        const intervals = [];
+
+        wraps.forEach(wrap => {
+            const dateEl = wrap.querySelector('.date');
+            const text = wrap.textContent.toLowerCase();
+            // Exclude education wraps
+            if (dateEl && !text.includes('bachelor') && !text.includes('hsc') && !text.includes('ssc') && !text.includes('school') && !text.includes('college')) {
+                const dateText = dateEl.textContent.trim();
+                const parts = dateText.split(/[-–—]/);
+                if (parts.length >= 2) {
+                    const start = this.parseSingleDate(parts[0]);
+                    const end = this.parseSingleDate(parts[1]);
+                    intervals.push({ start, end });
+                }
+            }
+        });
+
+        if (intervals.length === 0) return 0;
+
+        // Sort by start date
+        intervals.sort((a, b) => a.start - b.start);
+
+        // Merge intervals (union)
+        const merged = [intervals[0]];
+        for (let i = 1; i < intervals.length; i++) {
+            const last = merged[merged.length - 1];
+            const curr = intervals[i];
+            if (curr.start <= last.end) {
+                last.end = new Date(Math.max(last.end, curr.end));
+            } else {
+                merged.push(curr);
+            }
+        }
+
+        // Sum non-overlapping duration
+        let totalMonths = 0;
+        merged.forEach(interval => {
+            const yearDiff = interval.end.getFullYear() - interval.start.getFullYear();
+            const monthDiff = interval.end.getMonth() - interval.start.getMonth();
+            totalMonths += yearDiff * 12 + monthDiff + 1; // inclusive of start month
+        });
+
+        return totalMonths;
+    }
+
+    /* Dynamic Project Detailer Helpers */
+    findMatchingProjectCard(message) {
+        const completedCards = document.querySelectorAll('.completed-project-card');
+        const currentCards = document.querySelectorAll('.current-project-card');
+        const resumeWraps = document.querySelectorAll('.resume-wrap');
+        const allCards = [...completedCards, ...currentCards, ...resumeWraps];
+        
+        const cleanMsg = message.toLowerCase();
+        let bestMatch = null;
+        let maxOverlap = 0;
+        
+        allCards.forEach(card => {
+            const titleEl = card.querySelector('h3, h2, .position');
+            if (titleEl) {
+                const title = titleEl.textContent.toLowerCase();
+                const titleWords = title.split(/\s+/).filter(w => w.length > 3 && w !== 'with' && w !== 'using' && w !== 'system' && w !== 'chatbot');
+                let overlap = 0;
+                titleWords.forEach(word => {
+                    if (cleanMsg.includes(word)) {
+                        overlap++;
+                    }
+                });
+
+                if (cleanMsg.includes(title) || title.includes(cleanMsg)) {
+                    overlap += 5;
+                }
+
+                if (overlap > maxOverlap) {
+                    maxOverlap = overlap;
+                    bestMatch = card;
+                }
+            }
+        });
+        
+        return maxOverlap >= 1 ? bestMatch : null;
+    }
+
+    extractProjectDetails(card) {
+        const titleEl = card.querySelector('h3, h2, .position');
+        if (!titleEl) return null;
+        
+        const title = titleEl.textContent.trim();
+        const badge = card.querySelector('.completed-card-badge') || card.querySelector('.current-project-card::after');
+        const techLine = card.querySelector('.completed-project-tech-line') || card.querySelector('.project-tech-wrapper');
+        const descEl = card.querySelector('p');
+        const bullets = Array.from(card.querySelectorAll('.completed-project-bullets li, ul li'));
+        const link = card.querySelector('a');
+        
+        let html = `🔎 <b>Project Details: ${title}</b>`;
+        if (badge) {
+            html += ` <span style="font-size: 11px; padding: 2px 6px; border-radius: 10px; background: rgba(180, 174, 162, 0.15); color: #b4aea2;">Active</span>`;
+        }
+        html += `<br><br>`;
+        
+        if (descEl) {
+            html += `${descEl.textContent.trim()}<br><br>`;
+        }
+        
+        if (bullets.length > 0) {
+            html += `<b>Key Highlights:</b><br>`;
+            bullets.slice(0, 4).forEach(bullet => {
+                html += `• ${bullet.textContent.trim()}<br>`;
+            });
+            html += `<br>`;
+        }
+        
+        if (techLine) {
+            const techText = techLine.textContent.replace('Technologies:', '').replace('Active', '').trim();
+            html += `🛠️ <b>Technologies:</b> <i>${techText}</i><br><br>`;
+        }
+        
+        if (link) {
+            html += `📂 <a href="${link.href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">View Project Code / Link</a><br><br>`;
+        }
+        
+        return html;
+    }
+
     /**
      * Extract skills
      */
     extractSkills(section) {
-        const skillElements = section.querySelectorAll('.skill-mf span:not(.pull-right):not(.title-s)');
-
-        if (skillElements.length > 0) {
-            const skills = Array.from(skillElements)
-                .map(el => el.textContent.trim())
-                .filter(skill => skill && skill !== 'Skills' && skill !== 'Frameworks -- Python and Generative AI');
-
-            if (skills.length > 0) {
-                return `<strong>💡 Monisha's Technical Skills:</strong><br><br>
-                    ${skills.slice(0, 15).map(s => `• <strong>${s}</strong>`).join('<br>')}<br><br>
-                    <em>Check out the Projects section to see these skills in action!</em>`;
-            }
+        const skillCards = section.querySelectorAll('.skill-card');
+        
+        if (skillCards.length > 0) {
+            let responseHTML = `<strong>💡 Monisha's Technical Skills & Expertise (Section-Wise):</strong><br><br>`;
+            
+            skillCards.forEach(card => {
+                const headingEl = card.querySelector('h4');
+                if (headingEl) {
+                    const tagElements = card.querySelectorAll('.skill-tag');
+                    const tagsList = [];
+                    
+                    tagElements.forEach(t => {
+                        let text = t.textContent.trim();
+                        // If it's a learning/new stack, highlight it!
+                        if (t.classList.contains('learning')) {
+                            // Strip "— Learning" or similar if present to keep it clean, or keep it and add emoji
+                            const cleanText = text.replace(/-\s*learning/i, '').replace(/—\s*learning/i, '').trim();
+                            tagsList.push(`<strong>${cleanText} (New 🚀)</strong>`);
+                        } else {
+                            tagsList.push(text);
+                        }
+                    });
+                    
+                    if (tagsList.length > 0) {
+                        responseHTML += `<b>${headingEl.textContent.trim()}</b>:<br>`;
+                        responseHTML += `${tagsList.join(', ')}<br><br>`;
+                    }
+                }
+            });
+            
+            responseHTML += `<em>Check out the Completed Projects and Current Projects sections to see these in action!</em>`;
+            return responseHTML;
         }
 
-        return this.extractDefault(section, 'about-section');
+        const skillElements = section.querySelectorAll('.skill-tag');
+        if (skillElements.length > 0) {
+            const skills = Array.from(skillElements).map(el => el.textContent.trim());
+            return `<strong>💡 Monisha's Technical Skills:</strong><br><br>
+                ${skills.slice(0, 20).map(s => `• ${s}`).join('<br>')}`;
+        }
+
+        return this.extractDefault(section, 'technical-section');
+    }
+
+    /**
+     * Extract current project details
+     */
+    extractCurrentProject(section) {
+        const projectCards = section.querySelectorAll('.current-project-card');
+        let responseHTML = '<strong>⚡ Monisha\'s Current Active Projects (Last 1.5 Months):</strong><br><br>';
+        let count = 0;
+
+        if (projectCards.length > 0) {
+            projectCards.forEach(card => {
+                const titleEl = card.querySelector('h3');
+                const descEl = card.querySelector('p');
+                const techTags = Array.from(card.querySelectorAll('.project-tech')).map(t => t.textContent.trim());
+
+                if (titleEl) {
+                    count++;
+                    responseHTML += `<strong>${count}. ${titleEl.textContent.trim()}</strong><br>`;
+                    if (descEl) {
+                        responseHTML += `${descEl.textContent.trim()}<br>`;
+                    }
+                    if (techTags.length > 0) {
+                        responseHTML += `🛠️ <i>Technologies: ${techTags.join(', ')}</i><br>`;
+                    }
+                    responseHTML += '<br>';
+                }
+            });
+        }
+
+        if (count === 0) {
+            // Fallback content in case section is not fully loaded in DOM
+            responseHTML += `1. <strong>Go Backend System Architecture</strong>: Monolith to Microservice refactoring, Redis caching, Celery task queues.<br><br>`;
+            responseHTML += `2. <strong>Autonomous Multi-Agent Systems & Production RAG</strong>: Multi-agent networks with CrewAI/Deep Agents, LiteLLM gateway, LLM evaluations.<br><br>`;
+            responseHTML += `3. <strong>Workflow Automation & Tool Integration</strong>: n8n ETL pipelines, MCP servers with Claude Code.`;
+        }
+
+        return responseHTML + '<em>Scroll to the "Current Project" section in the portfolio for more details!</em>';
     }
 
     /**
      * Extract work experience
      */
     extractExperience(section) {
-        const experienceBlocks = section.querySelectorAll('.resume-wrap');
-        let expHTML = '<strong>💼 Work Experience:</strong><br><br>';
+        const totalMonths = this.calculateTotalExperience(section);
+        const years = Math.floor(totalMonths / 12);
+        const months = totalMonths % 12;
+        let totalExpStr = '';
+        if (years > 0) {
+            totalExpStr += `${years} year${years > 1 ? 's' : ''}`;
+        }
+        if (months > 0) {
+            if (totalExpStr) totalExpStr += ' and ';
+            totalExpStr += `${months} month${months > 1 ? 's' : ''}`;
+        }
+
+        const wraps = section.querySelectorAll('.resume-wrap');
+        const experienceBlocks = [];
+        wraps.forEach(wrap => {
+            const text = wrap.textContent.toLowerCase();
+            if (!text.includes('bachelor') && !text.includes('hsc') && !text.includes('ssc') && !text.includes('school') && !text.includes('college')) {
+                experienceBlocks.push(wrap);
+            }
+        });
+
+        let expHTML = `<strong>💼 Work Experience:</strong> (Total Duration: ~${totalExpStr})<br><br>`;
         let count = 0;
 
         experienceBlocks.forEach(block => {
             const position = block.querySelector('.position');
             const date = block.querySelector('.date');
-            const company = block.querySelector('h3 a');
+            const company = block.querySelector('h3 a, h3');
 
-            if (position && date && count < 3) {
+            if (position && date && count < 4) {
                 count++;
-                expHTML += `<strong>${count}. ${position.textContent}</strong><br>`;
-                if (company) expHTML += `📍 ${company.textContent}<br>`;
-                expHTML += `📅 ${date.textContent}<br><br>`;
+                expHTML += `<strong>${count}. ${position.textContent.trim()}</strong><br>`;
+                if (company) {
+                    const companyName = company.textContent.replace('Company Name :', '').trim();
+                    expHTML += `📍 ${companyName}<br>`;
+                }
+                expHTML += `📅 ${date.textContent.trim()}<br><br>`;
             }
         });
 
@@ -753,39 +1057,41 @@ class ResponseGenerator {
     }
 
     /**
-     * Extract projects with clickable GitHub links
+     * Extract completed projects - reads the new .completed-project-card structure
      */
     extractProjects(section) {
-        const projectItems = section.querySelectorAll('ul li');
-        let projectHTML = '<strong>🚀 Featured Projects:</strong><br><br>';
+        const completedCards = section.querySelectorAll('.completed-project-card');
+        let projectHTML = '<strong>🚀 Completed Projects:</strong><br><br>';
         let count = 0;
 
-        projectItems.forEach((item, index) => {
-            const titleEl = item.querySelector('h3');
-            const linkEl = item.querySelector('a');
-            const descEl = item.querySelector('p');
+        if (completedCards.length > 0) {
+            completedCards.forEach(card => {
+                const titleEl = card.querySelector('h3');
+                const techLine = card.querySelector('.completed-project-tech-line');
+                const bullets = Array.from(card.querySelectorAll('.completed-project-bullets li')).slice(0, 2);
+                const githubLink = card.querySelector('.completed-project-link a');
 
-            if (titleEl && count < 5) {
-                count++;
-                const title = titleEl.textContent.replace(/^\d+\s*[.]\s*/, '').trim();
-                const gitLink = linkEl ? linkEl.href : null;
-                const desc = descEl ? descEl.textContent.substring(0, 100) + '...' : '';
-
-                projectHTML += `${count}. <strong>${title}</strong><br>`;
-                projectHTML += `${desc}<br>`;
-
-                if (gitLink) {
-                    projectHTML += `📂 <a href="${gitLink}" target="_blank" style="color:#b4aea2; text-decoration:underline;">View on GitHub</a><br>`;
+                if (titleEl && count < 4) {
+                    count++;
+                    const title = titleEl.textContent.replace(/^[🤖🔊🏃🕷️\s]+/, '').trim();
+                    projectHTML += `${count}. <strong>${title}</strong><br>`;
+                    if (techLine) projectHTML += `<em>${techLine.textContent.trim()}</em><br>`;
+                    if (bullets.length > 0) {
+                        projectHTML += `• ${bullets.map(b => b.textContent.trim()).join('<br>• ')}<br>`;
+                    }
+                    if (githubLink) {
+                        projectHTML += `📂 <a href="${githubLink.href}" target="_blank" style="color:#b4aea2; text-decoration:underline;">View on GitHub</a><br>`;
+                    }
+                    projectHTML += '<br>';
                 }
-                projectHTML += '<br>';
-            }
-        });
+            });
 
-        if (count === 0) {
-            return this.extractDefault(section, 'project-section');
+            if (count > 0) {
+                return projectHTML + '<em>Explore the completed projects section for full details!</em>';
+            }
         }
 
-        return projectHTML + '<em>Click the links to explore the code!</em>';
+        return "I couldn't find any completed projects right now. Please check the Completed Projects section in the portfolio.";
     }
 
     /**
@@ -947,7 +1253,8 @@ class ResponseGenerator {
             'project-section': 'Projects',
             'domain-work': 'Domain Work',
             'Certification': 'Certification',
-            'contact-section': 'Contact'
+            'contact-section': 'Contact',
+            'technical-section': 'Technical Skills'
         };
         return names[sectionId] || 'relevant';
     }
@@ -1179,21 +1486,31 @@ class PortfolioChatbot {
     init() {
         this.ui.init();
         console.log('✅ Portfolio Chatbot (Hybrid) initialized successfully!');
-        console.log('🎯 Features: 4-Layer Architecture + Conversation Tracking + Fuzzy Matching + Clickable Links');
+        console.log('🎯 Features: 4-Layer Architecture + Conversation Tracking + Fuzzy Matching + Clickable Links + Context Resolution');
     }
 
     processMessage(message) {
-        // Add to conversation history
+        // Add user turn to conversation history
         this.convoManager.addTurn('user', message);
 
-        // Detect intent
-        const intentResult = this.intentDetector.detectIntent(message);
+        // Detect current intent
+        let intentResult = this.intentDetector.detectIntent(message);
         console.log('🎯 Detected Intent:', intentResult.intent, 'Confidence:', intentResult.confidence);
 
-        // Generate response
-        const response = this.responseGenerator.generateResponse(intentResult);
+        // Context-aware query resolution
+        const lastBotTurn = this.convoManager.history.slice(0, -1).reverse().find(t => t.role === 'bot');
+        const lastIntent = lastBotTurn ? lastBotTurn.intent : null;
+        
+        const pronounCheck = this.isPronounFollowUp(message);
+        if (pronounCheck && lastIntent && (intentResult.intent === 'unknown' || intentResult.confidence < 15)) {
+            console.log('🔄 Pronoun follow-up detected. Resolving context from previous intent:', lastIntent);
+            intentResult = this.resolveFollowUpIntent(message, lastIntent, intentResult);
+        }
 
-        // Add to conversation history
+        // Generate response
+        const response = this.responseGenerator.generateResponse(intentResult, message);
+
+        // Add bot turn to conversation history
         this.convoManager.addTurn('bot', response.text, intentResult.intent);
 
         // Display response with typing animation and follow-up chips
@@ -1203,6 +1520,55 @@ class PortfolioChatbot {
         if (response.shouldScroll && response.sectionId) {
             this.ui.scrollToSection(response.sectionId);
         }
+    }
+
+    isPronounFollowUp(message) {
+        const normalized = message.toLowerCase().trim();
+        const pronouns = ['it', 'its', 'them', 'they', 'those', 'that', 'this', 'there', 'link', 'github', 'code', 'tech', 'technologies', 'tools', 'languages', 'details', 'more', 'explain', 'show me'];
+        
+        const words = normalized.split(/\s+/);
+        if (words.length <= 8) {
+            return words.some(w => pronouns.includes(w)) || normalized.includes('show me') || normalized.includes('explain more') || normalized.includes('tell me more');
+        }
+        return false;
+    }
+
+    resolveFollowUpIntent(message, lastIntent, currentIntentResult) {
+        const normalized = message.toLowerCase().trim();
+        
+        if (lastIntent === 'projects' || lastIntent === 'currentProject') {
+            if (normalized.includes('code') || normalized.includes('github') || normalized.includes('link') || normalized.includes('repo')) {
+                return {
+                    intent: 'github',
+                    confidence: 20,
+                    data: this.kb.intentMap.github
+                };
+            }
+            if (normalized.includes('tech') || normalized.includes('tool') || normalized.includes('language') || normalized.includes('use')) {
+                return {
+                    intent: 'skills',
+                    confidence: 20,
+                    data: this.kb.intentMap.skills
+                };
+            }
+            return {
+                intent: 'projects',
+                confidence: 20,
+                data: this.kb.intentMap.projects
+            };
+        }
+        
+        if (lastIntent === 'experience') {
+            if (normalized.includes('tech') || normalized.includes('tool') || normalized.includes('language') || normalized.includes('use')) {
+                return {
+                    intent: 'skills',
+                    confidence: 20,
+                    data: this.kb.intentMap.skills
+                };
+            }
+        }
+
+        return currentIntentResult;
     }
 }
 

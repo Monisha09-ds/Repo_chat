@@ -30,6 +30,11 @@
 
 
 	<style>
+		/* ── Global Font Consistency ── */
+		body, h1, h2, h3, h4, h5, h6, p, li, input, button, select, textarea, .career-objective-text, .resume-wrap, .skill-tag, .project-tech, .chat-title h4, .chat-input, .navbar-nav a {
+			font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+		}
+
 		/* ── About section ── */
 		.about-mf .box-shadow-full {
 			padding-top: 4rem;
@@ -38,15 +43,204 @@
 		.about-mf .about-img { margin-bottom: 2rem; }
 		.about-mf .about-img img { margin-left: 10px; }
 
-		/* ── Skill progress bars ── */
-		.skill-mf .progress {
-			margin: .5rem 0 1.2rem 0;
-			border-radius: 0;
-			height: .7rem;
+		/* ── Technical Skills Section ── */
+		#technical-section {
+			padding: 5em 0;
+			background: #000000;
 		}
-		.skill-mf .progress .progress-bar {
-			height: .7rem;
-			background-color: #b4aea2;
+
+		.technical-section-header {
+			text-align: center;
+			margin-bottom: 50px;
+		}
+
+		.technical-section-header h2 {
+			font-size: clamp(22px, 4vw, 34px);
+			margin-bottom: 12px !important;
+		}
+
+		.technical-section-header p {
+			color: rgba(255,255,255,0.6);
+			font-size: clamp(13px, 2vw, 15px);
+			max-width: 620px;
+			margin: 0 auto;
+			line-height: 1.7;
+		}
+
+		/* ── Skills Grid ── */
+		.skills-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 22px;
+			margin-top: 10px;
+			width: 100%;
+		}
+
+		.skill-card {
+			background: rgba(255, 255, 255, 0.025);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: 14px;
+			padding: 24px 22px;
+			transition: all 0.32s cubic-bezier(0.25, 0.8, 0.25, 1);
+			backdrop-filter: blur(8px);
+			position: relative;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.skill-card::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 3px;
+			background: linear-gradient(90deg, transparent, #b4aea2, transparent);
+			transform: scaleX(0);
+			transition: transform 0.4s ease;
+		}
+
+		.skill-card:hover {
+			transform: translateY(-6px);
+			border-color: rgba(180, 174, 162, 0.45);
+			background: rgba(255, 255, 255, 0.04);
+			box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+		}
+
+		.skill-card:hover::before {
+			transform: scaleX(1);
+		}
+
+		.skill-card h4 {
+			color: #ffffff;
+			font-size: 15px;
+			font-weight: 600 !important;
+			margin-bottom: 16px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			padding-bottom: 10px;
+			letter-spacing: 0.4px;
+			line-height: 1.4;
+		}
+
+		.skill-tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 7px;
+			flex: 1;
+			align-content: flex-start;
+		}
+
+		.skill-tag {
+			background: rgba(180, 174, 162, 0.08);
+			border: 1px solid rgba(180, 174, 162, 0.16);
+			color: rgba(255, 255, 255, 0.78);
+			padding: 5px 11px;
+			border-radius: 20px;
+			font-size: 12px;
+			transition: all 0.2s ease;
+			cursor: default;
+			white-space: nowrap;
+		}
+
+		.skill-tag:hover {
+			background: #b4aea2;
+			border-color: #b4aea2;
+			color: #000000;
+			transform: scale(1.05);
+			font-weight: 600;
+		}
+
+		.skill-tag.learning {
+			border-style: dashed;
+			border-color: rgba(255, 255, 255, 0.3);
+			color: rgba(255, 255, 255, 0.5);
+			background: rgba(255, 255, 255, 0.02);
+		}
+
+		.skill-tag.learning:hover {
+			background: rgba(255, 255, 255, 0.18);
+			color: #ffffff;
+			border-color: #ffffff;
+		}
+
+		/* ── Current Project Section ── */
+		.current-projects-container {
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+			margin-top: 40px;
+		}
+
+		.current-project-card {
+			background: rgba(255, 255, 255, 0.02);
+			border: 1px solid rgba(255, 255, 255, 0.06);
+			border-radius: 16px;
+			padding: 30px;
+			transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.current-project-card::after {
+			content: 'Active';
+			position: absolute;
+			top: 15px;
+			right: 15px;
+			background: rgba(180, 174, 162, 0.2);
+			border: 1px solid rgba(180, 174, 162, 0.4);
+			color: #b4aea2;
+			font-size: 11px;
+			padding: 3px 10px;
+			border-radius: 12px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: 600;
+		}
+
+		.current-project-card:hover {
+			border-color: rgba(180, 174, 162, 0.4);
+			background: rgba(255, 255, 255, 0.03);
+			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+		}
+
+		.current-project-card h3 {
+			font-size: 20px;
+			color: #ffffff;
+			margin-bottom: 12px;
+			font-weight: 600;
+		}
+
+		.current-project-card p {
+			color: rgba(255, 255, 255, 0.7);
+			font-size: 14.5px;
+			line-height: 1.6;
+			margin-bottom: 18px;
+		}
+
+		.project-tech-wrapper {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			align-items: center;
+		}
+
+		.project-tech-label {
+			font-size: 13px;
+			color: rgba(255, 255, 255, 0.5);
+			margin-right: 5px;
+		}
+
+		.project-tech {
+			background: rgba(255, 255, 255, 0.05);
+			color: #b4aea2;
+			font-size: 12px;
+			padding: 4px 10px;
+			border-radius: 6px;
+			border: 1px solid rgba(255, 255, 255, 0.08);
 		}
 
 		/* ── Typing animation ── */
@@ -80,6 +274,96 @@
 
 		/* ── Section spacing ── */
 		.ftco-section { padding: 6em 0; }
+
+		/* ── Completed Projects Section ── */
+		.completed-projects-container {
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+			margin-top: 10px;
+			width: 100%;
+		}
+
+		.completed-project-card {
+			background: rgba(255, 255, 255, 0.02);
+			border: 1px solid rgba(255, 255, 255, 0.06);
+			border-radius: 16px;
+			padding: 30px;
+			transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.completed-card-badge {
+			position: absolute;
+			top: 15px;
+			right: 15px;
+			background: rgba(100, 200, 120, 0.15);
+			border: 1px solid rgba(100, 200, 120, 0.35);
+			color: #7ecf8a;
+			font-size: 11px;
+			padding: 3px 10px;
+			border-radius: 12px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: 600;
+			font-family: 'Poppins', sans-serif;
+		}
+
+		.completed-project-card:hover {
+			border-color: rgba(180, 174, 162, 0.4);
+			background: rgba(255, 255, 255, 0.035);
+			box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+			transform: translateY(-3px);
+		}
+
+		.completed-project-card h3 {
+			font-size: 20px;
+			color: #ffffff;
+			margin-bottom: 8px;
+			font-weight: 600;
+			padding-right: 80px; /* avoid overlap with badge */
+		}
+
+		.completed-project-tech-line {
+			color: rgba(180, 174, 162, 0.8);
+			font-size: 13px;
+			margin-bottom: 14px;
+			margin-top: 0;
+		}
+
+		.completed-project-bullets {
+			list-style-type: disc;
+			margin-left: 20px;
+			margin-bottom: 16px;
+			padding: 0;
+		}
+
+		.completed-project-bullets li {
+			color: rgba(255, 255, 255, 0.72);
+			font-size: 14.5px;
+			line-height: 1.65;
+			margin-bottom: 6px;
+		}
+
+		.completed-project-bullets li strong {
+			color: rgba(255, 255, 255, 0.92);
+		}
+
+		.completed-project-link {
+			margin-top: 14px;
+		}
+
+		.completed-project-link a {
+			color: #b4aea2;
+			text-decoration: underline;
+			font-size: 13.5px;
+			transition: color 0.2s ease;
+		}
+
+		.completed-project-link a:hover {
+			color: #ffffff;
+		}
 	</style>
 
 
@@ -103,9 +387,10 @@
 				<ul class="navbar-nav nav ml-auto">
 					<li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
 					<li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
-					<li class="nav-item"><a href="#resume-section" class="nav-link"><span>Resume</span></a></li>
-					<li class="nav-item"><a href="#project-section" class="nav-link"><span>Current Projects</span></a>
-					</li>
+					<li class="nav-item"><a href="#technical-section" class="nav-link"><span>Technical Stacks</span></a></li>
+					<li class="nav-item"><a href="#resume-section" class="nav-link"><span>Work Experience</span></a></li>
+					<!-- <li class="nav-item"><a href="#current-project-section" class="nav-link"><span>Current Project</span></a></li> -->
+					<li class="nav-item"><a href="#project-section" class="nav-link"><span>Completed Projects</span></a></li>
 					<li class="nav-item"><a href="#domain-work" class="nav-link"><span>Domain Works</span></a></li>
 					<li class="nav-item"><a href="#Certification" class="nav-link"><span>Certification</span></a></li>
 					<li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li>
@@ -142,8 +427,8 @@
 									// Create an array of typing text
 									const typingTexts = [
 										'AI Engineer',
-										'Research Analysist',
-										'Online Mentor ',
+										'Research Analyst',
+										'Online Mentor',
 									];
 
 									// Create a function to display the typing animation for a given text
@@ -204,11 +489,13 @@
 				<div class="col-md-12 text-left">
 					<h2 class="mb-4"><b>Career Objective</b></h2>
 					<p class="career-objective-text">
-						<strong>I want to work as an Applied AI Engineer</strong> with strong backend and DevOps
+						<!-- <strong>I want to work as an Applied AI Engineer</strong> with strong backend and DevOps
 						orientation, focused on
 						designing, deploying, and scaling production-grade AI systems. Passionate about building
 						automated, reliable, and maintainable AI-driven backend platforms that integrate
-						<strong>Generative AI</strong> and <strong>cloud-native DevOps practices</strong>.
+						<strong>Generative AI</strong> and <strong>cloud-native DevOps practices</strong>. -->
+						<strong>My goal is to contribute as an Applied AI Engineer with backend and DevOps orientation, focused on designing scalable, production-grade AI systems. I have experience building data ingestion pipelines, RAG architectures, agentic workflows, and AI-integrated backend services for real-world applications. I have worked on integrating LLMs into existing production websites, optimizing latency and cost-performance trade-offs, and developing intelligent, context-aware chat interfaces.</strong>
+						
 					</p>
 				</div>
 			</div>
@@ -216,12 +503,12 @@
 	</section>
 
 
-	<section class="ftco-about img ftco-section ftco-no-pb" id="about-section">
+	<!-- <section class="ftco-about img ftco-section ftco-no-pb" id="about-section"> -->
+	<section class="ftco-section ftco-no-pb" id="about-section">
 		<div class="container">
-			<div class="row">
-				<div class="row d-flex align-items-stretch">
-					<!-- <div class="row d-flex"> -->
-					<div class="col-md-6 col-lg-5 d-flex">
+			<div class="row d-flex align-items-stretch">
+				<!-- About Image Left Column -->
+				<div class="col-md-6 col-lg-5 d-flex">
 						<div class="img-about img d-flex align-items-stretch">
 							<div class="overlay">
 								<div class="row">
@@ -236,137 +523,14 @@
 										<div class="about-info">
 											<p><span class="title-s">Name: </span> <span>Sabikun Naher Monisha</span>
 											</p>
-											<p><span class="title-s">Job Role: </span><span>AI
-													Engineer,<br><span>Research Analysist</span><br><span>Online
-														Mentor</span></p>
+											<p><span class="title-s">Job Role: </span><span>AI Engineer,<br><span>Research Analyst</span><br><span>Online Mentor</span></span></p>
 											<p><span class="title-s">Experience: </span> <span>2.5+ Years</span></p>
 
 										</div>
 									</div>
 								</div>
 
-								<div class="skill-mf">
-									<p class="title-s">Skills</p>
-									<span>Python</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%"
-											aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-
-									<span>Generative AI</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%"
-											aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-
-									<!-- <span>Excel</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%"
-											aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-									</div> -->
-
-									<span>Statistics</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%"
-											aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-
-									<span>Machine Learning</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%"
-											aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<span>Deep Learning</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<span>Natural Language Processing</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<span>SQL</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<span>Power BI</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-
-									</div>
-									<span>Postgresql</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<span>MLOps</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-
-									</div>
-
-
-									<span>Docker</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-
-									</div>
-									<span>System Design (Microservice Orchestration, Data sync pipeline for structured
-										or unstructured data)</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%"
-											aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-
-									<span>Github Actions(CI/CD pipeline)</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-
-									<span>AWS(S3,EC2)</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<span>Redis(Cache Memory Management)</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<span>Celery(Task Queue)</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<span>Knowledge Graph DB(Neo4j)</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<span>ElevenLabs API(Text-to-Speech (TTS)) </span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<span>LLM-Finetuning(LoRA)</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-									<span>GraphQL</span> <span class="pull-right"></span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 100%;"
-											aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-
-
-								</div>
+								<!-- Left Column Skills progress bars removed to be replaced by the structured grid below -->
 							</div>
 						</div>
 					</div>
@@ -387,93 +551,177 @@
 									goal is to integrate AI with Data Science to uncover insights, enhance analytics,
 									and drive impactful business solutions</p> -->
 
-								<p>I have recently worked at Mediusware Ltd. as a Software Engineer(I) in AI/ML domain.
-									I have built and improved backend-driven AI systems for real-world applications. I
-									have hands-on experience working on standalone AI applications, integrating
-									AI-based features into existing software systems, and configuring high-performance GPU servers to optimize LLM inference and resolve hardware bottlenecks. My work focuses on designing RAG pipelines, multi-agent workflows, scalable APIs, and AI-powered backend services
-									using technologies such as FastAPI, LangChain, LangGraph, vector databases, and
-									modern LLM frameworks.
-
-									I have completed my BSc in ,<strong>Information Technology</strong> from Institute
-									of Information Technology, Jahangirnagar University. Through my professional
-									work,search involvement, and mentorship activities, I have developed practical
-									experience in Machine Learning, Deep Learning, Natural Language Processing, and
-									Generative AI.My
-									goal is to integrate AI with Data Science to uncover insights, enhance analytics,
-									and drive impactful business solutions.</p>
+								<p>I have recently worked at Mediusware Ltd. as a Software Engineer (I) in the AI/ML domain. I have built and improved backend-driven AI systems for real-world applications, with hands-on experience working on standalone AI applications, integrating AI-based features into existing software systems, and configuring high-performance GPU servers to optimize LLM inference and resolve hardware bottlenecks. My work focuses on designing RAG pipelines, multi-agent workflows, scalable APIs, and AI-powered backend services using technologies such as FastAPI, LangChain, LangGraph, vector databases, and modern LLM frameworks.</p>
+								<p>I completed my BSc in <strong>Information Technology</strong> from the Institute of Information Technology, Jahangirnagar University. Through my professional work, research involvement, and mentorship activities, I have developed practical experience in Machine Learning, Deep Learning, Natural Language Processing, and Generative AI. My goal is to integrate AI with Data Science to uncover insights, enhance analytics, and drive impactful business solutions.</p>
 								<ul class="about-info mt-4 px-md-0 px-2">
-									<!-- <li class="d-flex"><span>Profile:</span> <span>Data Science &amp; Analytics</span></li> -->
+									
 									<li class="d-flex"><span>Domain:</span> <span>Information Technology </span></li>
 									<li class="d-flex"><span>Education:</span> <span>BSc(Hons) ,IIT,Jahangirnagar
 											University</span></li>
 									<li class="d-flex"><span>Language:</span> <span>English,Bangla</span></li>
-									<li class="d-flex"><span>Programming Language:</span>
+									<!-- <li class="d-flex"><span>Programming Language:</span>
 										<span>Python,C++,Java(OOP),HTML,CSS,JS,R</span>
-									</li>
-									<li class="d-flex"><span>Competencies :</span> <span>Data Analysis and
-											Visualization, Model Building ,Deployment </span></li>
-									<!-- <li class="d-flex"><span>Interest:</span> <span>Traveling, Travel Photography, Teaching</span></li> -->
-
+									</li> -->
+									<!-- <li class="d-flex"><span>Competencies :</span><br>
+										<span>Microservices Orchestration, Data-driven prediction systems, Time series analysis, Statistical analysis, Web Scraping, LLM Application Evaluation (RAGAS, Jailbreak), System Design, Edge-case Handling.</span>
+									</li> -->
 								</ul>
-							</div>
-						</div>
-						<div class="skill-mf">
-							<p class="title-s"><b>Frameworks -- Python and Generative AI </b></p>
-							<span>Flask,FastAPI,Django,Pydantic,Streamlit</span> <span class="pull-right"></span>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="80"
-									aria-valuemin="0" aria-valuemax="100">
-								</div>
-							</div>
-							<span>Numpy,Pandas,Matplotlib,Scipy,Seaborn,Plotly</span> <span class="pull-right"></span>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="95"
-									aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<span>Sckit-Learn,Tenssorflow,Pytorch,Keras </span> <span class="pull-right"></span>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="95"
-									aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<span>Gen AI Models - OpenAI,Llama-index,Google Gemini,Hugging Face,Stable Diffusion</span>
-							<span class="pull-right"></span>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="95"
-									aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<span>Agentic Framework - Langchain,Langraph,CrewAI, Autogen</span> <span
-								class="pull-right"></span>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="95"
-									aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<span>RAG -- (Hybrid, Multimodal, GraphRAG)</span> <span class="pull-right"></span>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="95"
-									aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-
-							<!-- <div class="counter-wrap ftco-animate d-flex mt-md-3">
-							<div class="text">
-								<p class="mb-4">
-									<span class="number" data-number="10">0</span> <span>+</span>
-									<span>&nbsp; Projects completed</span>
-								</p>
-								<p><a href="https://github.com/Monisha09-ds/" class="btn btn-primary py-3 px-3">Github</a></p>
-							</div>
-						</div> -->
-						</div>
-						<div class="container">
-
-
-						</div>
-					</div>
-				</div>
-			</div>
+						</div> <!-- close col-md-12 heading-section -->
+					</div> <!-- close row justify-content-start -->
+				</div> <!-- close col-md-6 col-lg-7 -->
+			</div> <!-- close row d-flex align-items-stretch -->
+		</div> <!-- close container -->
 	</section>
 
+	<!-- ══ TECHNICAL SKILLS SECTION ══════════════════════════════════════ -->
+	<!-- <section class="ftco-section" id="technical-section" style="background: #050505; padding: 5em 0;"> -->
+	<section class="ftco-section ftco-no-pb" id="technical-section">
+		<div class="container">
+			<div class="technical-section-header ftco-animate">
+				<!-- <h1 class="big big-2" style="text-align:center;">Skills</h1> -->
+				
+				<h1 class="big-4">Technical Skills &amp; Expertise</h1>
+				<p>My technical stack categorized by domain &mdash; displaying core expertise and active focus areas at a glance.</p>
+				<div class="underline"></div>
+			</div>
+
+			<div class="skills-grid">
+
+				<!-- Card 1: Core Programming Languages -->
+				<div class="skill-card ftco-animate">
+					<h4>🌐 Core Programming Languages</h4>
+					<div class="skill-tags">
+						<span class="skill-tag">Python</span>
+						<span class="skill-tag">C++</span>
+						<span class="skill-tag learning">Go  &mdash; Learning</span>
+					</div>
+				</div>
+
+				<!-- Card 2: Data Science & Analytics -->
+				<div class="skill-card ftco-animate">
+					<h4>📊 Data Science &amp; Analytics</h4>
+					<div class="skill-tags">
+						<span class="skill-tag">Machine Learning</span>
+						<span class="skill-tag">Deep Learning</span>
+						<span class="skill-tag">NLP</span>
+						<span class="skill-tag">Statistics</span>
+						<span class="skill-tag">Generative AI</span>
+						<span class="skill-tag">Power BI</span>
+						<span class="skill-tag">Time Series Analysis</span>
+						<span class="skill-tag">MLOps</span>
+						<span class="skill-tag">Statistical Analysis</span>
+					</div>
+				</div>
+
+				<!-- Card 3: Frameworks & Libraries -->
+				<div class="skill-card ftco-animate">
+					<h4>📦 Frameworks &amp; Libraries</h4>
+					<div class="skill-tags">
+						<span class="skill-tag">FastAPI</span>
+						<span class="skill-tag">Django</span>
+						<span class="skill-tag">Flask</span>
+						<span class="skill-tag">Pydantic</span>
+						<span class="skill-tag">Streamlit</span>
+						<span class="skill-tag">NumPy</span>
+						<span class="skill-tag">Pandas</span>
+						<span class="skill-tag">Matplotlib / Seaborn</span>
+						<span class="skill-tag">Scikit-learn</span>
+						<span class="skill-tag">TensorFlow</span>
+						<span class="skill-tag">PyTorch</span>
+						<span class="skill-tag">Keras</span>
+					</div>
+				</div>
+
+				<div class="skill-card ftco-animate">
+					<h4>⚙️ Databases</h4>
+					<div class="skill-tags">
+						<span class="skill-tag">SQL</span>
+						<span class="skill-tag">PostgreSQL</span>
+						<span class="skill-tag">Vector Database (FAISS, ChromaDB, Qdrant)</span>
+						<span class="skill-tag">Graph Database (Neo4j)</span>
+						<span class="skill-tag">Redis (In memory database)</span>
+					</div>
+				</div>
+
+				<!-- Card 4: System Design & Backend -->
+				<div class="skill-card ftco-animate">
+					<h4>⚙️ System Design &amp; Backend</h4>
+					<div class="skill-tags">
+						<span class="skill-tag">Monolith &amp; Microservices</span>
+						<span class="skill-tag">Redis (Cache)</span>
+						<span class="skill-tag">Celery (Task Queue)</span>
+						<span class="skill-tag">GraphQL</span>
+						<span class="skill-tag">Docker</span>
+						<span class="skill-tag">GitHub Actions (CI/CD)</span>
+						<span class="skill-tag">AWS (S3, EC2)</span>
+						<span class="skill-tag">(Microservice Orchestration, Data sync pipeline for structured or unstructured data</span>
+					</div>
+				</div>
+
+				<!-- Card 5: Generative AI & LLMs -->
+				<div class="skill-card ftco-animate">
+					<h4>🧠 Generative AI &amp; LLMs</h4>
+					<div class="skill-tags">
+						<span class="skill-tag">LangChain</span>
+						<span class="skill-tag">LangGraph</span>
+						<span class="skill-tag">LangSmith</span>
+						<span class="skill-tag">LiteLLM Gateway</span>
+						<span class="skill-tag">LLM Evaluations</span>
+						<span class="skill-tag">LLM Fine-Tuning (LoRA,QLoRA)</span>
+						<span class="skill-tag">ElevenLabs TTS</span>
+						<span class="skill-tag">Knowledge Graph DB (Neo4j)</span>
+						<span class="skill-tag">(MCP)</span>
+					</div>
+				</div>
+
+				<!-- Card 6: Agentic Workflows -->
+				<div class="skill-card ftco-animate">
+					<h4>🤖 Agentic Workflows</h4>
+					<div class="skill-tags">
+						<span class="skill-tag">CrewAI</span>
+						<span class="skill-tag">LangGraph</span>
+						<span class="skill-tag">LangChain</span>
+						<span class="skill-tag">Deep Agents</span>
+						<span class="skill-tag">AutoGen</span>
+						<span class="skill-tag">Multi-Agent Orchestration</span>
+					</div>
+				</div>
+
+				<!-- Card 7: Retrieval Augmented Generation -->
+				<div class="skill-card ftco-animate">
+					<h4>🔍 Retrieval Augmented Generation</h4>
+					<div class="skill-tags">
+						<span class="skill-tag">Naive RAG</span>
+						<span class="skill-tag">Graph RAG</span>
+						<span class="skill-tag">Multimodal RAG</span>
+						<span class="skill-tag">Hybrid RAG</span>
+						<span class="skill-tag">Agentic RAG</span>
+						
+					</div>
+				</div>
+
+				<!-- Card 8: Workflow Automation & ETL -->
+				<div class="skill-card ftco-animate">
+					<h4>⚡ Workflow Automation &amp; Other Competencies</h4>
+					<div class="skill-tags">
+						<span class="skill-tag">n8n</span>
+						<span class="skill-tag">Crawl4AI (Web Scraping Pipeline Automation)</span>
+						<span class="skill-tag">Data Pipeline Design</span>
+						<span class="skill-tag">Microservices Orchestration</span>
+						<span class="skill-tag">Data-driven Prediction Systems</span>
+						<!-- <span class="skill-tag">Time Series Analysis</span> -->
+						<span class="skill-tag">Statistical Analysis</span>
+						<span class="skill-tag">LLM Application Evaluation with RAGAS , Guardrails</span>
+						<!-- <span class="skill-tag">System Design</span> -->
+						<span class="skill-tag">Edge-case Handling</span>
+						
+					</div>
+				</div>
 
 
+			</div><!-- /.skills-grid -->
+		</div><!-- /.container -->
+	</section>
 
 	<section class="ftco-section ftco-no-pb" id="resume-section">
 		<div class="container">
@@ -524,7 +772,7 @@
 
 			<div class="col-md-6">
 				<div class="resume-wrap ftco-animate">
-					<span class="date">March 2024 - Present</span>
+					<span class="date">March 2024 - May 2026</span>
 					<h3>Online Mentorship & Research Work</h3>
 					<!-- <span class="position">iQuanti</span> -->
 					<p class="mt-4">Creating Documentation specializing on ML , DL and GenAI concepts and continue my
@@ -656,165 +904,155 @@
 		</div>
 	</section>
 
+	<!-- Current Project Section (hidden for now)
+	<section class="ftco-section" id="current-project-section">
+		<div class="container">
+			<div class="row justify-content-center mb-5 pb-5">
+				<div class="col-md-7 heading-section text-center ftco-animate">
+					<h1 class="big big-2">Active Work</h1>
+					<h2 class="mb-4">Current Projects</h2>
+					<p>Technical projects and learning initiatives I have actively focused on over the last 1.5 months.</p>
+				</div>
+			</div>
+			<div class="row current-projects-container">
+				<div class="col-md-12 current-project-card ftco-animate">
+					<h3>⚡ Scalable System Architecture & Backend Optimization</h3>
+					<p>Designing and restructuring backend architectures to support microservices. Focused on implementing high-performance distributed caching to minimize response latency, integrating task/message queues for reliable asynchronous work processing, and transitioning legacy monolith components into scalable microservices using <strong>Go (Golang)</strong>.</p>
+					<div class="project-tech-wrapper">
+						<span class="project-tech-label">Technologies:</span>
+						<span class="project-tech">Go (Golang)</span>
+						<span class="project-tech">Redis Caching</span>
+						<span class="project-tech">Celery Task Queue</span>
+						<span class="project-tech">Microservices</span>
+						<span class="project-tech">PostgreSQL</span>
+					</div>
+				</div>
+				<div class="col-md-12 current-project-card ftco-animate">
+					<h3>🧠 Autonomous Multi-Agent Systems & Production RAG</h3>
+					<p>Developing agentic workflows utilizing multi-agent orchestration frameworks to execute complex, multi-step tasks autonomously. Deploying production-grade Retrieval-Augmented Generation (RAG) networks with <strong>LiteLLM</strong> as a centralized LLM Gateway to manage token costs, API key routing, and analytics. Integrating robust evaluation pipelines to continuously monitor system hallucination, factual correctness, and retrieval quality.</p>
+					<div class="project-tech-wrapper">
+						<span class="project-tech-label">Technologies:</span>
+						<span class="project-tech">CrewAI</span>
+						<span class="project-tech">Deep Agents</span>
+						<span class="project-tech">LiteLLM Gateway</span>
+						<span class="project-tech">Production RAG</span>
+						<span class="project-tech">LLM Evaluation</span>
+					</div>
+				</div>
+				<div class="col-md-12 current-project-card ftco-animate">
+					<h3>🔌 Workflow Automation & Tool Interoperability</h3>
+					<p>Engineering robust workflow automation servers with <strong>n8n</strong> to automate ETL pipelines and connect business integrations. Building custom <strong>Model Context Protocol (MCP)</strong> servers to enable Large Language Models to safely interact with local development environments, databases, and secure API gateways, utilizing developer tools like <strong>Claude Code</strong>.</p>
+					<div class="project-tech-wrapper">
+						<span class="project-tech-label">Technologies:</span>
+						<span class="project-tech">n8n</span>
+						<span class="project-tech">Claude Code</span>
+						<span class="project-tech">Model Context Protocol (MCP)</span>
+						<span class="project-tech">Workflow Automation</span>
+						<span class="project-tech">API Integration</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	-->
+
 	<section class="ftco-section" id="project-section">
 		<div class="container">
 			<div class="row justify-content-center mb-5 pb-5">
 				<div class="col-md-7 heading-section text-center ftco-animate">
 					<h1 class="big big-2">Latest Projects</h1>
 					<h2 class="mb-4">Projects (Completed)</h2>
-					<!-- <p>Project I have Worked. .</p> -->
-
 				</div>
 			</div>
 
-			<div class="row d-flex">
-				<ul>
-					<!-- <li>
-						<h3><b>1 .</b>NutriGuide: Calorie Tracker & Personalized Diet Planner</h3>
-						<a href="https://github.com/Monisha09-ds/Gemini_Calorie_App.git">GitHub Link</a>
-						<p> NutriGuide is a web-based application designed to identify the nutrition value of food-image
-							and offering personalized diet recommendations.</p>
-					</li> -->
-					<!-- <li>
-				<h3><b>2 .</b>Data Chatbot: Interactive CSV, PDF, and URL Exploration</h3>
-				<a href="https://github.com/Monisha09-ds/PDF_Summarizer.git">GitHub Link</a>
-				<p>This project would involve creating a chatbot that allows users to interact with data from CSV files, PDFs, and URLs, enabling them to ask questions, extract information, and analyze data in a conversational manner.</p>
-			</li>
-			<li>
-				<h3><b>3 .</b>Quality Prediction System</h3>
-				<a href="https://github.com/Monisha09-ds/Quality_prediction.git">GitHub Link</a>
-				<p>Implementation of modular coding with ML algorithms with production grade web application.</p>
-			</li>
-			<li>
-				<h3><b>4 .</b>ClientConnect AI</h3>
-				<a href="https://github.com/Monisha09-ds/RMG_Deployment.git">GitHub Link</a>
-				<p>ClientConnect AI is a client interaction and management system designed to streamline client communication. The system engages in live chats with clients, captures relevant information during the conversation, generates concise summaries, and drafts personalized emails for follow-up or management purposes.</p>
-			</li>-->
-					<li>
-						<h3><b>1.</b> AI Sales Assistant (Multi-Agent RAG System)</h3>
-						<p><i>Technologies: LangGraph, LangChain, ChromaDB, Django</i></p>
-						<ul style="list-style-type: disc; margin-left: 20px; color: rgba(255, 255, 255, 0.7);">
-							<li>Architected a <strong>multi-agent RAG system</strong> automating end-to-end dealership
-								workflows, reducing manual operations by <strong>60%</strong>.</li>
-							<li>Designed specialized agents for document parsing, pricing estimation, booking, FAQ
-								retrieval, and human escalation.</li>
-							<li>Implemented <strong>intent-based agent routing</strong> using LangGraph, improving tool
-								selection accuracy from user queries.</li>
-							<li>Built backend services integrating <strong>LLM inference, vector retrieval, and API
-									orchestration</strong>.</li>
-						</ul>
-					</li>
+			<div class="row completed-projects-container">
 
-					<li>
-						<h3><b>2.</b> Multimodal RAG System with Microservice-Oriented Architecture</h3>
-						<p><i>Technologies: LangChain, HuggingFace, Whisper, TTS, ChromaDB</i></p>
-						<ul style="list-style-type: disc; margin-left: 20px; color: rgba(255, 255, 255, 0.7);">
-							<li>Developed a <strong>modular multimodal RAG system</strong> supporting text, image, and
-								real-time TTS-based responses.</li>
-							<li>Designed and orchestrated multiple RAG pipelines (<strong>Graph RAG, Hybrid RAG, Agentic
-									RAG</strong>) as <strong>independent microservices</strong>.</li>
-							<li>Implemented <strong>session-based memory management</strong> to maintain isolated
-								conversational contexts across dynamically selected RAG systems.</li>
-							<li>Enabled flexible model integration supporting both <strong>API-based LLMs and locally
-									fine-tuned models</strong> for embedding and response generation.</li>
-							<li>Improved system extensibility and scalability through modular pipeline abstraction and
-								service-level orchestration.</li>
-						</ul>
-					</li>
+				<!-- Completed Project 1 -->
+				<div class="col-md-12 completed-project-card ftco-animate">
+					<div class="completed-card-badge">Completed</div>
+					<h3>🤖 AI Sales Assistant (Multi-Agent RAG System)</h3>
+					<p class="completed-project-tech-line"><i>Technologies: LangGraph, LangChain, ChromaDB, Django</i></p>
+					<ul class="completed-project-bullets">
+						<li>Architected a <strong>multi-agent RAG system</strong> automating end-to-end dealership workflows, reducing manual operations by <strong>60%</strong>.</li>
+						<li>Designed specialized agents for document parsing, pricing estimation, booking, FAQ retrieval, and human escalation.</li>
+						<li>Implemented <strong>intent-based agent routing</strong> using LangGraph, improving tool selection accuracy from user queries.</li>
+						<li>Built backend services integrating <strong>LLM inference, vector retrieval, and API orchestration</strong>.</li>
+					</ul>
+					<div class="project-tech-wrapper">
+						<span class="project-tech-label">Stack:</span>
+						<span class="project-tech">LangGraph</span>
+						<span class="project-tech">LangChain</span>
+						<span class="project-tech">ChromaDB</span>
+						<span class="project-tech">Django</span>
+					</div>
+				</div>
 
-					<li>
-						<h3><b>3.</b> Habit Tracker AI (Standalone Agent-Based Application)</h3>
-						<p><i>Technologies: FastAPI, OpenAI API, Render</i></p>
-						<ul style="list-style-type: disc; margin-left: 20px; color: rgba(255, 255, 255, 0.7);">
-							<li>Built a <strong>standalone AI-driven habit tracking system</strong> leveraging
-								agent-based behavioral analysis.</li>
-							<li>Designed modular backend architecture using <strong>FastAPI</strong> with structured API
-								responses and validation.</li>
-							<li>Implemented LLM-based evaluation logic to generate <strong>personalized feedback and
-									progress scoring</strong>.</li>
-							<li>Deployed production-ready backend on <strong>Render</strong> ensuring accessibility and
-								scalability.</li>
-						</ul>
-					</li>
+				<!-- Completed Project 2 -->
+				<div class="col-md-12 completed-project-card ftco-animate">
+					<div class="completed-card-badge">Completed</div>
+					<h3>🔊 Multimodal RAG System with Microservice-Oriented Architecture</h3>
+					<p class="completed-project-tech-line"><i>Technologies: LangChain, HuggingFace, Whisper, TTS, ChromaDB</i></p>
+					<ul class="completed-project-bullets">
+						<li>Developed a <strong>modular multimodal RAG system</strong> supporting text, image, and real-time TTS-based responses.</li>
+						<li>Designed and orchestrated multiple RAG pipelines (<strong>Graph RAG, Hybrid RAG, Agentic RAG</strong>) as <strong>independent microservices</strong>.</li>
+						<li>Implemented <strong>session-based memory management</strong> to maintain isolated conversational contexts across dynamically selected RAG systems.</li>
+						<li>Enabled flexible model integration supporting both <strong>API-based LLMs and locally fine-tuned models</strong> for embedding and response generation.</li>
+						<li>Improved system extensibility and scalability through modular pipeline abstraction and service-level orchestration.</li>
+					</ul>
+					<div class="project-tech-wrapper">
+						<span class="project-tech-label">Stack:</span>
+						<span class="project-tech">LangChain</span>
+						<span class="project-tech">HuggingFace</span>
+						<span class="project-tech">Whisper</span>
+						<span class="project-tech">TTS</span>
+						<span class="project-tech">ChromaDB</span>
+					</div>
+				</div>
 
-					<li>
-						<h3><b>4.</b> Web Scraper Pipeline: Recursive ETL for Unstructured Data</h3>
-						<p><i>Technologies: Crawl4AI, FastAPI, Pydantic, PostgreSQL</i></p>
-						<ul style="list-style-type: disc; margin-left: 20px; color: rgba(255, 255, 255, 0.7);">
-							<li>Built a <strong>recursive web scraping and ETL pipeline</strong> designed for
-								large-scale data extraction from unstructured sources.</li>
-							<li>Integrated <strong>Crawl4AI</strong> to convert raw HTML into knowledge-ready formats
-								(JSON/Markdown) asynchronously, improving extraction speed by <strong>4x</strong>.</li>
-							<li>Developed a <strong>FastAPI backend</strong> with multi-tenant support for managing
-								complex scraping tasks and real-time monitoring.</li>
-							<li>Automated <strong>data cleaning and transformation</strong> workflows, ensuring
-								high-quality ingestion for vector databases and LLM applications.</li>
-							<li>Implemented <strong>robust error handling and retry mechanisms</strong> to handle
-								dynamic content and site-specific anti-scraping measures.</li>
-						</ul>
-						<p><a href="https://github.com/Monisha09-ds/Webscraping_Pipeline.git"
-								style="color: #b4aea2; text-decoration: underline;">GitHub Link</a></p>
-					</li>
+				<!-- Completed Project 3 -->
+				<div class="col-md-12 completed-project-card ftco-animate">
+					<div class="completed-card-badge">Completed</div>
+					<h3>🏃 Habit Tracker AI (Standalone Agent-Based Application)</h3>
+					<p class="completed-project-tech-line"><i>Technologies: FastAPI, OpenAI API, Render</i></p>
+					<ul class="completed-project-bullets">
+						<li>Built a <strong>standalone AI-driven habit tracking system</strong> leveraging agent-based behavioral analysis.</li>
+						<li>Designed modular backend architecture using <strong>FastAPI</strong> with structured API responses and validation.</li>
+						<li>Implemented LLM-based evaluation logic to generate <strong>personalized feedback and progress scoring</strong>.</li>
+						<li>Deployed production-ready backend on <strong>Render</strong>, ensuring accessibility and scalability.</li>
+					</ul>
+					<div class="project-tech-wrapper">
+						<span class="project-tech-label">Stack:</span>
+						<span class="project-tech">FastAPI</span>
+						<span class="project-tech">OpenAI API</span>
+						<span class="project-tech">Render</span>
+					</div>
+				</div>
 
-					<!-- <li>
-						<h3><b>6.</b>ClientConnect AI</h3>
-						<a href="https://github.com/Monisha09-ds/RMG_Deployment.git">GitHub Link</a>
-						<p>ClientConnect AI is a client interaction and management system designed to streamline client
-							communication. The system engages in live chats with clients, captures relevant information
-							during the conversation, generates concise summaries, and drafts personalized emails for
-							follow-up or management purposes.</p>
-					</li> -->
-					<!-- <li> 
-				<h3><b>5 .</b>Source Code Analysis with LLM</h3>
-				<a href="https://github.com/Monisha09-ds/Source_Code_Analysis-Using-LLM.git">GitHub Link</a>
-				<p>ClientConnect AI is a client interaction and management system designed to streamline client communication. The system engages in live chats with clients, captures relevant information during the conversation, generates concise summaries, and drafts personalized emails for follow-up or management purposes.</p>
-			</li> -->
-					<!-- <li>
-				<h3><b>6 .</b>Interview Question Answer Generation with LLM</h3>
-				<a href="https://github.com/Monisha09-ds/Interview_MCQ_generation.git">GitHub Link</a>
-				<p>This application  on automating the creation of interview questions and answer by extracting key information from documents allowing download option of answer sheet in PDF or Text format.
-					
-				</p> 
-			</li>
-			  <li>
-				<h3><b>7 .</b>Big-Mart-Sales-Analysis</h3>
-				<a href="https://github.com/Monisha09-ds/Big-Mart-Sales-Preditive-WebApp.git">GitHub Link</a>
-				<p>This web application uses machine learning to predict the sales according to features and previous transaction history of the store.</p>
-			  </li>
-			  
-			  <li>
-				<h3><b>8 .</b>Multiple-Disease-Prediction-with-Streamlit</h3>
-				<a href="https://github.com/Monisha09-ds/Multiple-Disease-Prediction-with-Streamlit-.git">GitHub Link</a>
-				<p>This web application uses ML algorithm to predict diseases including Parkinson's, diabetes, and heart disease based on their symptoms.</p>
-			  </li>
-			  
-			  <li>
-				<h3><b>9 .</b>Market_Segmentation</h3>
-				<a href="https://github.com/Monisha09-ds/Market_Segement_with-PCA.git">GitHub Link</a>
-				<p>A webapp that helps develop customer segmentation to provide recommendations like saving plans, loans, wealth management, etc., to target customer groups.</p>
-			  </li>
-			  
-			  <li>
-				<h3><b>10 .</b>Local-Chatbot-and-QA-system-webapp-using-Google-Gemini</h3>
-				<a href="https://github.com/Monisha09-ds/-Local-Chatbot-and-QA-system-webapp-using-Google-Gemini.git">GitHub Link</a>
-				<p>Leveraging advanced AI models for question-answering systems from custom data sources.</p>
-			  </li>
+				<!-- Completed Project 4 -->
+				<div class="col-md-12 completed-project-card ftco-animate">
+					<div class="completed-card-badge">Completed</div>
+					<h3>🕷️ Web Scraper Pipeline: Recursive ETL for Unstructured Data</h3>
+					<p class="completed-project-tech-line"><i>Technologies: Crawl4AI, FastAPI, Pydantic, PostgreSQL</i></p>
+					<ul class="completed-project-bullets">
+						<li>Built a <strong>recursive web scraping and ETL pipeline</strong> designed for large-scale data extraction from unstructured sources.</li>
+						<li>Integrated <strong>Crawl4AI</strong> to convert raw HTML into knowledge-ready formats (JSON/Markdown) asynchronously, improving extraction speed by <strong>4×</strong>.</li>
+						<li>Developed a <strong>FastAPI backend</strong> with multi-tenant support for managing complex scraping tasks and real-time monitoring.</li>
+						<li>Automated <strong>data cleaning and transformation</strong> workflows, ensuring high-quality ingestion for vector databases and LLM applications.</li>
+						<li>Implemented <strong>robust error handling and retry mechanisms</strong> to handle dynamic content and site-specific anti-scraping measures.</li>
+					</ul>
+					<div class="project-tech-wrapper">
+						<span class="project-tech-label">Stack:</span>
+						<span class="project-tech">Crawl4AI</span>
+						<span class="project-tech">FastAPI</span>
+						<span class="project-tech">Pydantic</span>
+						<span class="project-tech">PostgreSQL</span>
+					</div>
+					<div class="completed-project-link">
+						<a href="https://github.com/Monisha09-ds/Webscraping_Pipeline.git" target="_blank">🔗 GitHub Repository</a>
+					</div>
+				</div>
 
-			  <li>
-				<h3><b>11 .</b>Resume Score Analyzer</h3>
-				<a href="https://github.com/Monisha09-ds/Resume_Analysis.git">GitHub Link</a>
-				<p>AI-powered tool that evaluates resumes by extracting and analyzing key details such as skills, experience, and qualifications, matching them against specific job requirements.</p>
-			  </li>
-			  
-
-			  <li>
-				<h3><b>12 .</b>Data Scrapping with AI Agent</h3>
-				<a href="https://github.com/Monisha09-ds/Data_Scrapper.git">GitHub Link</a>
-				<p>Developed an AI-driven data scraping tool capable of extracting data directly from URLs based on specified input fields. The system allows users to download the scraped data in various formats, including CSV, JSON, and Markdown, providing flexibility and efficiency in data management.</p>
-			  </li>  -->
-
-				</ul>
-			</div>
+			</div><!-- /.completed-projects-container -->
 		</div>
 	</section>
 
@@ -1274,8 +1512,8 @@
 
 		<div class="chat-suggestions" id="suggestion-chips-container">
 			<button class="suggestion-chip" data-query="skills">💡 Skills</button>
-			<button class="suggestion-chip" data-query="projects">🚀 Projects</button>
-			<button class="suggestion-chip" data-query="publications">🔬 Publications</button>
+			<button class="suggestion-chip" data-query="certification">📜 Certifications</button>
+			<button class="suggestion-chip" data-query="projects">🚀 Completed Projects</button>
 			<button class="suggestion-chip" data-query="resume">📄 Resume</button>
 			<button class="suggestion-chip" data-query="contact">📧 Contact</button>
 		</div>
